@@ -1,0 +1,13 @@
+﻿global using BuildingBlocks.CQRS;
+global using BuildingBlocks.Pagination;
+global using FluentValidation;
+global using MediatR;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.Extensions.Logging;
+global using OrderStream.Application.Data;
+global using OrderStream.Application.Dtos;
+global using OrderStream.Application.Exceptions;
+global using OrderStream.Application.Extensions;
+global using OrderStream.Domain.Events;
+global using OrderStream.Domain.Models;
+global using OrderStream.Domain.ValueObjects;
