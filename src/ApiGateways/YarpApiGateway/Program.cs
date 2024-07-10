@@ -21,4 +21,4 @@ app.UseRateLimiter();
 
 app.MapReverseProxy();
 
-app.Run();
+await app.RunAsync();

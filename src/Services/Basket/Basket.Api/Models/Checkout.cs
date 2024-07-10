@@ -3,7 +3,7 @@
 public class Checkout
 {
     public string Username { get; set; } = default!;
-    public Guid CustomerId { get; set; } = default!;
+    public Guid CustomerId { get; set; } = Guid.Empty;
 
     // Shipping and BillingAddress
     public string FirstName { get; set; } = default!;

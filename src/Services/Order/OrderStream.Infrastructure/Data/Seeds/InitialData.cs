@@ -1,6 +1,6 @@
 ﻿namespace OrderStream.Infrastructure.Data.Seeds;
 
-internal class InitialData
+internal static class InitialData
 {
     public static IEnumerable<Customer> Customers =>
     [

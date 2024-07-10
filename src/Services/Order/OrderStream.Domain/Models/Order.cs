@@ -14,7 +14,6 @@ public class Order : Aggregate<OrderId>
     public decimal TotalPrice
     {
         get => Items.Sum(x => x.Price * x.Quantity);
-        private set { }
     }
 
     public static Order Create(OrderId id, CustomerId customerId, OrderName name, Address shippingAddress, Address billingAddress, Payment payment)
@@ -57,7 +56,7 @@ public class Order : Aggregate<OrderId>
 
     public void Remove(ProductId productId)
     {
-        var orderItem = _items.FirstOrDefault(x => x.ProductId == productId);
+        var orderItem = _items.Find(x => x.ProductId == productId);
 
         if (orderItem is not null)
         {

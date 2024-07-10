@@ -4,15 +4,15 @@ namespace Catalog.Api.Data;
 
 public class CatalogInitialData : IInitialData
 {
-    public async Task Populate(IDocumentStore store, CancellationToken cancellationToken)
+    public async Task Populate(IDocumentStore store, CancellationToken cancellation)
     {
         using var session = store.LightweightSession();
 
-        if (await session.Query<Product>().AnyAsync(cancellationToken)) return;
+        if (await session.Query<Product>().AnyAsync(cancellation)) return;
 
         // Marten UPSERT will cater for existing records
         session.Store(GetPreconfiguredProducts());
-        await session.SaveChangesAsync(cancellationToken);
+        await session.SaveChangesAsync(cancellation);
     }
 
     private static IEnumerable<Product> GetPreconfiguredProducts() =>

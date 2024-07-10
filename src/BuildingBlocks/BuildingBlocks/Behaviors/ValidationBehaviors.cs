@@ -14,9 +14,9 @@ public class ValidationBehaviors<TRequest, TResponse>(IEnumerable<IValidator<TRe
 
         var validationResults = await Task.WhenAll(validators.Select(x => x.ValidateAsync(context, cancellationToken)));
 
-        var failures = validationResults.Where(x => !x.IsValid).SelectMany(x => x.Errors).ToList();
+        var failures = validationResults.Where(x => !x.IsValid).SelectMany(x => x.Errors);
 
-        if (failures.Count > 0) throw new ValidationException(failures);
+        if (failures.Any()) throw new ValidationException(failures);
 
         return await next();
     }
