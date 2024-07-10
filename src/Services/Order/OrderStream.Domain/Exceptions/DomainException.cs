@@ -1,4 +1,6 @@
-﻿namespace OrderStream.Domain.Exceptions;
+﻿using System.Runtime.Serialization;
+
+namespace OrderStream.Domain.Exceptions;
 
 [Serializable]
 public class DomainException : Exception

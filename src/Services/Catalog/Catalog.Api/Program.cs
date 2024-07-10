@@ -73,4 +73,4 @@ app.UseHealthChecks("/health", new HealthCheckOptions
 //});
 #endregion
 
-app.Run();
+await app.RunAsync();

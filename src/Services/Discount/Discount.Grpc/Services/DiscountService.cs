@@ -21,7 +21,7 @@ public class DiscountService(DiscountContext discountContext,
                             Description = "No Discount"
                         };
 
-        logger.LogInformation("Discount is retrieved for ProductName : {productName}, Amount : {amount}", coupon.ProductName, coupon.Amount);
+        logger.LogInformation("Discount is retrieved for ProductName : {ProductName}, Amount : {Amount}", coupon.ProductName, coupon.Amount);
 
         CouponModel couponModel = coupon.Adapt<CouponModel>();
         return couponModel;
