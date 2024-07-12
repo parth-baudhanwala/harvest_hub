@@ -20,7 +20,7 @@ internal static class InitialData
     {
         get
         {
-            Address address1 = Address.Of("Parth", "Baudhanwala", "parthb@gmail.com", "Rajhans Apartment", "India", "Gujarat", "312003");
+            Address address1 = Address.Of("Parth", "Baudhanwala", "parthb@gmail.com", "Rajhans Apartment", "India", "Gujarat", "31200");
             Address address2 = Address.Of("Hailee", "", "hailee@gmail.com", "Thousand Oaks, Tarzana, Los Angeles", "United States", "California", "90212");
 
             Payment payment1 = Payment.Of("Parth Baudhanwala", "5555555555554444", "12/28", "355", 1);
