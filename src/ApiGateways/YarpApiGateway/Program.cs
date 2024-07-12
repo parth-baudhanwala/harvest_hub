@@ -17,6 +17,8 @@ builder.Services.AddRateLimiter(rateLimiterOptions =>
 
 var app = builder.Build();
 
+app.UseHttpsRedirection();
+
 app.UseRateLimiter();
 
 app.MapReverseProxy();

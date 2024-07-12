@@ -15,6 +15,10 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
+app.UseApiServices();
+
+app.UseHttpsRedirection();
+
 if (app.Environment.IsDevelopment())
 {
     await app.InitializeDatabaseAsync();

@@ -8,7 +8,7 @@ public class DeleteOrder : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapDelete("/orders{orderId}", async (Guid orderId, IMediator mediator) =>
+        app.MapDelete("/orders/{orderId}", async (Guid orderId, IMediator mediator) =>
         {
             var result = await mediator.Send(new DeleteOrderCommand(orderId));
             var response = result.Adapt<DeleteOrderResponse>();

@@ -74,6 +74,9 @@ builder.Services.AddHealthChecks()
 var app = builder.Build();
 
 // Run Services
+
+app.UseHttpsRedirection();
+
 app.MapCarter();
 
 app.UseExceptionHandler(options => { });

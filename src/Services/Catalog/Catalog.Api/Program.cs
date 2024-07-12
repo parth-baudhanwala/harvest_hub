@@ -37,6 +37,9 @@ builder.Services.AddHealthChecks().AddNpgSql(catalogDbConnection);
 var app = builder.Build();
 
 // Run Services
+
+app.UseHttpsRedirection();
+
 app.MapCarter();
 
 app.UseExceptionHandler(options => { });
