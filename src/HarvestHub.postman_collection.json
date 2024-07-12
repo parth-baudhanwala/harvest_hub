@@ -1,0 +1,726 @@
+{
+	"info": {
+		"_postman_id": "02286a2f-1f6c-415e-af44-d945320471b9",
+		"name": "HarvestHub",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14999781"
+	},
+	"item": [
+		{
+			"name": "Catalog",
+			"item": [
+				{
+					"name": "GET Product",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{catalog_url}}/products?index=1&size=10",
+							"host": [
+								"{{catalog_url}}"
+							],
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "index",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ProductById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{catalog_url}}/products/0190a82d-c0ac-465f-92d3-f87febbbaead",
+							"host": [
+								"{{catalog_url}}"
+							],
+							"path": [
+								"products",
+								"0190a82d-c0ac-465f-92d3-f87febbbaead"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ProductByCategory",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{catalog_url}}/products/category/Farm",
+							"host": [
+								"{{catalog_url}}"
+							],
+							"path": [
+								"products",
+								"category",
+								"Farm"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"ParleG\",\r\n    \"Categories\": [\"Biscuits\", \"Snacks\"],\r\n    \"Description\": \"ParleG 1kg\",\r\n    \"ImageFile\": \"ImageFile ParleG\",\r\n    \"Price\": 50\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{catalog_url}}/products",
+							"host": [
+								"{{catalog_url}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Product",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Id\": \"0190a82f-581c-4e8e-ac95-54298e4f6010\",\r\n    \"Name\": \"Parle G\",\r\n    \"Categories\": [\"Biscuits\"],\r\n    \"Description\": \"Parle G 1kg\",\r\n    \"ImageFile\": \"ImageFile Parle G\",\r\n    \"Price\": 50\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{catalog_url}}/products",
+							"host": [
+								"{{catalog_url}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{catalog_url}}/products/0190a82d-c0ac-465f-92d3-f87febbbaead",
+							"host": [
+								"{{catalog_url}}"
+							],
+							"path": [
+								"products",
+								"0190a82d-c0ac-465f-92d3-f87febbbaead"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{catalog_url}}/health",
+							"host": [
+								"{{catalog_url}}"
+							],
+							"path": [
+								"health"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Basket",
+			"item": [
+				{
+					"name": "GET BasketByUsername",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{basket_url}}/basket/pbaudhanwala",
+							"host": [
+								"{{basket_url}}"
+							],
+							"path": [
+								"basket",
+								"pbaudhanwala"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Store Basket",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Cart\": {\r\n        \"UserName\": \"pbaudhanwala\",\r\n        \"Items\": [\r\n            {\r\n                \"Quantity\": 2,\r\n                \"Price\": 950,\r\n                \"ProductId\": \"5334c996-8457-4cf0-815c-ed2b77c4ff61\",\r\n                \"ProductName\": \"Mango\"\r\n            },\r\n            {\r\n                \"Quantity\": 1,\r\n                \"Price\": 30,\r\n                \"ProductId\": \"c67d6323-e8b1-4bdf-9a75-b0d0d2e7e914\",\r\n                \"ProductName\": \"Oreo\"\r\n            }\r\n        ]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{basket_url}}/basket",
+							"host": [
+								"{{basket_url}}"
+							],
+							"path": [
+								"basket"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE BasketByUsername",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{basket_url}}/basket/pbaudhanwala",
+							"host": [
+								"{{basket_url}}"
+							],
+							"path": [
+								"basket",
+								"pbaudhanwala"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Checkout Basket",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"Checkout\": \r\n        {\r\n\t\t  \"userName\": \"pbaudhanwala\",\r\n\t\t  \"CustomerId\": \"58c49479-ec65-4de2-86e7-033c546291aa\",\r\n\t\t  \"firstName\": \"Parth\",\r\n\t\t  \"lastName\": \"Baudhanwala\",\r\n\t\t  \"emailAddress\": \"pb@gmail.com\",\r\n\t\t  \"addressLine\": \"Galaxy Apartment\",\r\n\t\t  \"country\": \"India\",\r\n\t\t  \"state\": \"Gujarat\",\r\n\t\t  \"zipCode\": \"12345\",\r\n\t\t  \"cardName\": \"CARD_1\",\r\n\t\t  \"cardNumber\": \"875-444-3739\",\r\n\t\t  \"expiration\": \"11/29\",\r\n\t\t  \"cvv\": \"455\",\r\n\t\t  \"paymentMethod\": 1\r\n\t\t}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{basket_url}}/basket/checkout",
+							"host": [
+								"{{basket_url}}"
+							],
+							"path": [
+								"basket",
+								"checkout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{basket_url}}/health",
+							"host": [
+								"{{basket_url}}"
+							],
+							"path": [
+								"health"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "OrderStream",
+			"item": [
+				{
+					"name": "POST Order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Order\": {\r\n        \"CustomerId\": \"58c49479-ec65-4de2-86e7-033c546291aa\",\r\n        \"Name\": \"ORD_3\",\r\n        \"ShippingAddress\": {\r\n            \"FirstName\": \"Parth\",\r\n            \"LastName\": \"Baudhanwala\",\r\n            \"EmailAddress\": \"pb@gmail.com\",\r\n            \"AddressLine\": \"Galaxy Apartment\",\r\n            \"Country\": \"India\",\r\n            \"State\": \"Gujarat\",\r\n            \"ZipCode\": \"12345\"\r\n        },\r\n        \"BillingAddress\": {\r\n            \"FirstName\": \"Parth\",\r\n            \"LastName\": \"Baudhanwala\",\r\n            \"EmailAddress\": \"pb@gmail.com\",\r\n            \"AddressLine\": \"Galaxy Apartment\",\r\n            \"Country\": \"India\",\r\n            \"State\": \"Gujarat\",\r\n            \"ZipCode\": \"12345\"\r\n        },\r\n        \"Payment\": {\r\n            \"CardName\": \"CARD_1\",\r\n            \"CardNumber\": \"875-444-3739\",\r\n            \"Expiration\": \"12/29\",\r\n            \"Cvv\": \"455\",\r\n            \"PaymentMethod\": 1\r\n        },\r\n        \"Status\": 2,\r\n        \"Items\": [\r\n            {\r\n                \"ProductId\": \"5334c996-8457-4cf0-815c-ed2b77c4ff61\",\r\n                //\"ProductName\": \"Mango\",\r\n                \"Quantity\": 2,\r\n                \"Price\": 950\r\n            },\r\n            {\r\n                \"ProductId\": \"c67d6323-e8b1-4bdf-9a75-b0d0d2e7e914\",\r\n                //\"ProductName\": \"Oreo\",\r\n                \"Quantity\": 1,\r\n                \"Price\": 30\r\n            }\r\n        ]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{orderstream_url}}/orders",
+							"host": [
+								"{{orderstream_url}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Order",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Order\": {\r\n        \"Id\": \"cd78d0f1-2ef4-46b9-a418-c0271090b66d\",\r\n        \"CustomerId\": \"58c49479-ec65-4de2-86e7-033c546291aa\",\r\n        \"Name\": \"ORD_3\",\r\n        \"ShippingAddress\": {\r\n            \"FirstName\": \"Parth\",\r\n            \"LastName\": \"Baudhanwala\",\r\n            \"EmailAddress\": \"pb@gmail.com\",\r\n            \"AddressLine\": \"Galaxy Apartment\",\r\n            \"Country\": \"India\",\r\n            \"State\": \"Gujarat\",\r\n            \"ZipCode\": \"12345\"\r\n        },\r\n        \"BillingAddress\": {\r\n            \"FirstName\": \"Parth\",\r\n            \"LastName\": \"Baudhanwala\",\r\n            \"EmailAddress\": \"pb@gmail.com\",\r\n            \"AddressLine\": \"Galaxy Apartment\",\r\n            \"Country\": \"India\",\r\n            \"State\": \"Gujarat\",\r\n            \"ZipCode\": \"12345\"\r\n        },\r\n        \"Payment\": {\r\n            \"CardName\": \"CARD_1\",\r\n            \"CardNumber\": \"875-444-3739\",\r\n            \"Expiration\": \"12/29\",\r\n            \"Cvv\": \"455\",\r\n            \"PaymentMethod\": 1\r\n        },\r\n        \"Status\": 3,\r\n        \"Items\": [\r\n            {\r\n                \"ProductId\": \"5334c996-8457-4cf0-815c-ed2b77c4ff61\",\r\n                //\"ProductName\": \"Mango\",\r\n                \"Quantity\": 3,\r\n                \"Price\": 950\r\n            },\r\n            {\r\n                \"ProductId\": \"c67d6323-e8b1-4bdf-9a75-b0d0d2e7e914\",\r\n                //\"ProductName\": \"Oreo\",\r\n                \"Quantity\": 1,\r\n                \"Price\": 30\r\n            }\r\n        ]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{orderstream_url}}/orders",
+							"host": [
+								"{{orderstream_url}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Orders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{orderstream_url}}/orders?PageIndex=0&PageSize=2",
+							"host": [
+								"{{orderstream_url}}"
+							],
+							"path": [
+								"orders"
+							],
+							"query": [
+								{
+									"key": "PageIndex",
+									"value": "0"
+								},
+								{
+									"key": "PageSize",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET OrdersByName",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{orderstream_url}}/orders/ORD_2",
+							"host": [
+								"{{orderstream_url}}"
+							],
+							"path": [
+								"orders",
+								"ORD_2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET OrdersByCustomer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{orderstream_url}}/orders/customer/58c49479-ec65-4de2-86e7-033c546291aa",
+							"host": [
+								"{{orderstream_url}}"
+							],
+							"path": [
+								"orders",
+								"customer",
+								"58c49479-ec65-4de2-86e7-033c546291aa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Order",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{orderstream_url}}/orders/354c00f6-b04c-46ed-8d6d-f9f42d7bdf98",
+							"host": [
+								"{{orderstream_url}}"
+							],
+							"path": [
+								"orders",
+								"354c00f6-b04c-46ed-8d6d-f9f42d7bdf98"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{orderstream_url}}/health",
+							"host": [
+								"{{orderstream_url}}"
+							],
+							"path": [
+								"health"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "YarpApiGateway",
+			"item": [
+				{
+					"name": "Catalog",
+					"item": [
+						{
+							"name": "GET Product",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{yarp_url}}/catalog-service/products?index=1&size=10",
+									"host": [
+										"{{yarp_url}}"
+									],
+									"path": [
+										"catalog-service",
+										"products"
+									],
+									"query": [
+										{
+											"key": "index",
+											"value": "1"
+										},
+										{
+											"key": "size",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET ProductById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{yarp_url}}/catalog-service/products/5334c996-8457-4cf0-815c-ed2b77c4ff61",
+									"host": [
+										"{{yarp_url}}"
+									],
+									"path": [
+										"catalog-service",
+										"products",
+										"5334c996-8457-4cf0-815c-ed2b77c4ff61"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET ProductByCategory",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{yarp_url}}/catalog-service/products/category/c2",
+									"host": [
+										"{{yarp_url}}"
+									],
+									"path": [
+										"catalog-service",
+										"products",
+										"category",
+										"c2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST Product",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Name\": \"ParleG\",\r\n    \"Categories\": [\"Biscuits\", \"Snacks\"],\r\n    \"Description\": \"ParleG 1kg\",\r\n    \"ImageFile\": \"ImageFile ParleG\",\r\n    \"Price\": 50\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{yarp_url}}/catalog-service/products",
+									"host": [
+										"{{yarp_url}}"
+									],
+									"path": [
+										"catalog-service",
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE Product",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{yarp_url}}/catalog-service/products/018d2605-1fef-4cbf-b9b4-cbf999a85cc1",
+									"host": [
+										"{{yarp_url}}"
+									],
+									"path": [
+										"catalog-service",
+										"products",
+										"018d2605-1fef-4cbf-b9b4-cbf999a85cc1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Basket",
+					"item": [
+						{
+							"name": "GET BasketByUsername",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{yarp_url}}/basket-service/basket/pbaudhanwala",
+									"host": [
+										"{{yarp_url}}"
+									],
+									"path": [
+										"basket-service",
+										"basket",
+										"pbaudhanwala"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST Store Basket",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Cart\": {\r\n        \"UserName\": \"pbaudhanwala\",\r\n        \"Items\": [\r\n            {\r\n                \"Quantity\": 2,\r\n                \"Price\": 950,\r\n                \"ProductId\": \"5334c996-8457-4cf0-815c-ed2b77c4ff61\",\r\n                \"ProductName\": \"Mango\"\r\n            },\r\n            {\r\n                \"Quantity\": 1,\r\n                \"Price\": 30,\r\n                \"ProductId\": \"c67d6323-e8b1-4bdf-9a75-b0d0d2e7e914\",\r\n                \"ProductName\": \"Oreo\"\r\n            }\r\n        ]\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{yarp_url}}/basket-service/basket",
+									"host": [
+										"{{yarp_url}}"
+									],
+									"path": [
+										"basket-service",
+										"basket"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE BasketByUsername",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{yarp_url}}/basket-service/basket/pbaudhanwala",
+									"host": [
+										"{{yarp_url}}"
+									],
+									"path": [
+										"basket-service",
+										"basket",
+										"pbaudhanwala"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST Checkout Basket",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"Checkout\": \r\n        {\r\n\t\t  \"userName\": \"pbaudhanwala\",\r\n\t\t  \"CustomerId\": \"58c49479-ec65-4de2-86e7-033c546291aa\",\r\n\t\t  \"firstName\": \"Parth\",\r\n\t\t  \"lastName\": \"Baudhanwala\",\r\n\t\t  \"emailAddress\": \"pb@gmail.com\",\r\n\t\t  \"addressLine\": \"Galaxy Apartment\",\r\n\t\t  \"country\": \"India\",\r\n\t\t  \"state\": \"Gujarat\",\r\n\t\t  \"zipCode\": \"12345\",\r\n\t\t  \"cardName\": \"CARD_1\",\r\n\t\t  \"cardNumber\": \"875-444-3739\",\r\n\t\t  \"expiration\": \"11/29\",\r\n\t\t  \"cvv\": \"455\",\r\n\t\t  \"paymentMethod\": 1\r\n\t\t}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{yarp_url}}/basket-service/basket/checkout",
+									"host": [
+										"{{yarp_url}}"
+									],
+									"path": [
+										"basket-service",
+										"basket",
+										"checkout"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "OrderStream",
+					"item": [
+						{
+							"name": "GET Orders",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{yarp_url}}/ordering-service/orders?PageIndex=0&PageSize=2",
+									"host": [
+										"{{yarp_url}}"
+									],
+									"path": [
+										"ordering-service",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "PageIndex",
+											"value": "0"
+										},
+										{
+											"key": "PageSize",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET OrdersByName",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{yarp_url}}/ordering-service/orders/ORD_2",
+									"host": [
+										"{{yarp_url}}"
+									],
+									"path": [
+										"ordering-service",
+										"orders",
+										"ORD_2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET OrdersByCustomer",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{yarp_url}}/ordering-service/orders/customer/58c49479-ec65-4de2-86e7-033c546291aa",
+									"host": [
+										"{{yarp_url}}"
+									],
+									"path": [
+										"ordering-service",
+										"orders",
+										"customer",
+										"58c49479-ec65-4de2-86e7-033c546291aa"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}

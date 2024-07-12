@@ -6,7 +6,8 @@ public class UpdateOrderCommandHandler(IApplicationDbContext dbContext) : IComma
     {
         OrderId orderId = OrderId.Of(command.Order.Id);
 
-        Order order = await dbContext.Orders.FindAsync([orderId], cancellationToken)
+        Order order = await dbContext.Orders.Include(x => x.Items)
+                                            .SingleAsync(x => x.Id == orderId, cancellationToken)
                             ?? throw new OrderNotFoundException(command.Order.Id);
 
         UpdateOrderWithNewValues(order, command.Order);
