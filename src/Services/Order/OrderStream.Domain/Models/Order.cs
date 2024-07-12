@@ -14,6 +14,10 @@ public class Order : Aggregate<OrderId>
     public decimal TotalPrice
     {
         get => Items.Sum(x => x.Price * x.Quantity);
+        private set
+        {
+            // Total Price should not set.
+        }
     }
 
     public static Order Create(OrderId id, CustomerId customerId, OrderName name, Address shippingAddress, Address billingAddress, Payment payment)
