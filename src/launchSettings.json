@@ -7,7 +7,8 @@
         "catalog.api": "StartDebugging",
         "discount.grpc": "StartDebugging",
         "orderstream.api": "StartDebugging",
-        "yarpapigateway": "StartDebugging"
+        "yarpapigateway": "StartDebugging",
+        "identity.api": "StartDebugging"
       }
     }
   }

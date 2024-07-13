@@ -51,14 +51,25 @@ services:
       - "5672:5672"
       - "15672:15672"
 
+  identitydb:
+    container_name: identitydb
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=SwN12345678
+    restart: always
+    ports:
+      - "1434:1433"
+
   catalog.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
+      - Authority=https://identity.api:8081
       - ConnectionStrings__Catalog=Server=catalogdb;Port=5432;Database=CatalogDb;User Id=postgres;Password=postgres;Include Error Detail=true
     depends_on:
       - catalogdb
+      - identity.api
     ports:
       - "6000:8080"
       - "6060:8081"
@@ -71,6 +82,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
+      - Authority=https://identity.api:8081
       - ConnectionStrings__Basket=Server=basketdb;Port=5432;Database=BasketDb;User Id=postgres;Password=postgres;Include Error Detail=true
       - ConnectionStrings__Redis=distributedcache:6379
       - GrpcSettings__DiscountUrl=https://discount.grpc:8081
@@ -82,13 +94,13 @@ services:
       - distributedcache
       - discount.grpc
       - messagebroker
+      - identity.api
     ports:
       - "6001:8080"
       - "6061:8081"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
-
 
   discount.grpc:
     environment:
@@ -108,6 +120,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
+      - Authority=https://identity.api:8081
       - ConnectionStrings__Order=Server=orderdb;Database=OrderDb;User Id=sa;Password=SwN12345678;Encrypt=False;TrustServerCertificate=True
       - MessageBroker__Host=amqp://harvesthub-mq:5672
       - MessageBroker__UserName=guest
@@ -116,6 +129,7 @@ services:
     depends_on:
       - orderdb
       - messagebroker
+      - identity.api
     ports:
       - "6003:8080"
       - "6063:8081"
@@ -135,6 +149,21 @@ services:
     ports:
       - "6004:8080"
       - "6064:8081"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+
+  identity.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+      - ConnectionStrings__Identity=Server=identitydb;Database=IdentityDb;User Id=sa;Password=SwN12345678;Encrypt=False;TrustServerCertificate=True
+    depends_on:
+      - identitydb
+    ports:
+      - "6005:8080"
+      - "6065:8081"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
