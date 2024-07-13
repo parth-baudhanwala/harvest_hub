@@ -2,13 +2,37 @@ using BuildingBlocks.Behaviors;
 using BuildingBlocks.Exceptions.Handler;
 using Catalog.Api.Data;
 using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
 var assembly = typeof(Program).Assembly;
 string catalogDbConnection = builder.Configuration.GetConnectionString("Catalog")!;
+string authority = builder.Configuration["Authority"]!;
 
 #region Services
+
+builder.Services
+    .AddAuthentication(options =>
+    {
+        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+    {
+        options.Authority = authority;
+        options.TokenValidationParameters = new()
+        {
+            ValidateIssuerSigningKey = true,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.Zero
+        };
+    });
+
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("Read", config => config.RequireClaim("scope", "catalog_read"))
+    .AddPolicy("Write", config => config.RequireClaim("scope", "catalog_write"));
 
 builder.Services.AddCarter();
 
@@ -37,6 +61,10 @@ builder.Services.AddHealthChecks().AddNpgSql(catalogDbConnection);
 var app = builder.Build();
 
 // Run Services
+
+app.UseAuthentication();
+
+app.UseAuthorization();
 
 app.UseHttpsRedirection();
 

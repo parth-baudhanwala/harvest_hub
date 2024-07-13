@@ -21,6 +21,7 @@ public class GetOrders : ICarterModule
         .ProducesProblem(StatusCodes.Status400BadRequest)
         .ProducesProblem(StatusCodes.Status404NotFound)
         .WithSummary("Get Orders")
-        .WithDescription("Get Orders");
+        .WithDescription("Get Orders")
+        .RequireAuthorization("Read");
     }
 }
