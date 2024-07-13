@@ -18,6 +18,7 @@ public class StoreBasketEndpoint : ICarterModule
         .WithSummary("Store Basket")
         .WithDescription("Store Basket")
         .Produces<StoreBasketResponse>(StatusCodes.Status201Created)
-        .ProducesProblem(StatusCodes.Status400BadRequest);
+        .ProducesProblem(StatusCodes.Status400BadRequest)
+        .RequireAuthorization("Write");
     }
 }

@@ -18,6 +18,7 @@ public class GetProductsEndpoint : ICarterModule
         .WithSummary("Get Products")
         .WithDescription("Get Products")
         .Produces<GetProductsResponse>(StatusCodes.Status200OK)
-        .ProducesProblem(StatusCodes.Status400BadRequest);
+        .ProducesProblem(StatusCodes.Status400BadRequest)
+        .RequireAuthorization("Read");
     }
 }

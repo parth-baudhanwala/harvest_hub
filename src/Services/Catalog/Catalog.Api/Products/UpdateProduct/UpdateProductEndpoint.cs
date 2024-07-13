@@ -24,6 +24,7 @@ public class UpdateProductEndpoint : ICarterModule
         .WithDescription("Update Product")
         .Produces<UpdateProductResponse>(StatusCodes.Status200OK)
         .ProducesProblem(StatusCodes.Status400BadRequest)
-        .ProducesProblem(StatusCodes.Status404NotFound);
+        .ProducesProblem(StatusCodes.Status404NotFound)
+        .RequireAuthorization("Write");
     }
 }

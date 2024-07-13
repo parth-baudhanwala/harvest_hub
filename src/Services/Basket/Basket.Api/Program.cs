@@ -3,6 +3,7 @@ using BuildingBlocks.Exceptions.Handler;
 using BuildingBlocks.MessageBroker.MassTransit;
 using Discount.Grpc;
 using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,8 +11,31 @@ var assembly = typeof(Program).Assembly;
 string basketDbConnection = builder.Configuration.GetConnectionString("Basket")!;
 string redisConnection = builder.Configuration.GetConnectionString("Redis")!;
 string discountUrl = builder.Configuration["GrpcSettings:DiscountUrl"]!;
+string authority = builder.Configuration["Authority"]!;
 
 #region Services
+
+builder.Services
+    .AddAuthentication(options =>
+    {
+        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+    {
+        options.Authority = authority;
+        options.TokenValidationParameters = new()
+        {
+            ValidateIssuerSigningKey = true,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.Zero
+        };
+    });
+
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("Read", config => config.RequireClaim("scope", "basket_read"))
+    .AddPolicy("Write", config => config.RequireClaim("scope", "basket_write"));
 
 builder.Services.AddCarter();
 
@@ -74,6 +98,10 @@ builder.Services.AddHealthChecks()
 var app = builder.Build();
 
 // Run Services
+
+app.UseAuthentication();
+
+app.UseAuthorization();
 
 app.UseHttpsRedirection();
 
