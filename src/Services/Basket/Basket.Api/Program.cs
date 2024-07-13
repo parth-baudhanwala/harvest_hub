@@ -11,6 +11,7 @@ var assembly = typeof(Program).Assembly;
 string basketDbConnection = builder.Configuration.GetConnectionString("Basket")!;
 string redisConnection = builder.Configuration.GetConnectionString("Redis")!;
 string discountUrl = builder.Configuration["GrpcSettings:DiscountUrl"]!;
+string authority = builder.Configuration["Authority"]!;
 
 #region Services
 
@@ -22,7 +23,7 @@ builder.Services
     })
     .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
     {
-        options.Authority = "https://localhost:7022";
+        options.Authority = authority;
         options.TokenValidationParameters = new()
         {
             ValidateIssuerSigningKey = true,
