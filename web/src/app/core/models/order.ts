@@ -30,6 +30,6 @@ export interface Order {
   shippingAddress: Address;
   billingAddress: Address;
   payment: Payment;
-  status: string;
+  status: string | number;
   items: OrderItem[];
 }
