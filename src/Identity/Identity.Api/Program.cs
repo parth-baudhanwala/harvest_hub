@@ -186,8 +186,10 @@ app.MapGet("/api/auth/me", [Authorize] (ClaimsPrincipal principal) =>
 {
     return Results.Ok(new
     {
-        id = principal.FindFirstValue(JwtRegisteredClaimNames.Sub),
-        email = principal.FindFirstValue(JwtRegisteredClaimNames.Email),
+        id = principal.FindFirstValue(ClaimTypes.NameIdentifier)
+                ?? principal.FindFirstValue(JwtRegisteredClaimNames.Sub),
+        email = principal.FindFirstValue(ClaimTypes.Email)
+                ?? principal.FindFirstValue(JwtRegisteredClaimNames.Email),
         userName = principal.FindFirstValue(ClaimTypes.Name)
     });
 });
