@@ -59,7 +59,12 @@ services:
       context: .
       dockerfile: Identity/Identity.Api/Dockerfile
 
+  minio:
+    image: minio/minio
+    command: server /data --console-address ":9001"
+
 volumes:
   postgres_catalog:
   postgres_basket:
+  minio_data:
 
