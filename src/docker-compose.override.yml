@@ -60,6 +60,18 @@ services:
     ports:
       - "1434:1433"
 
+  minio:
+    container_name: minio
+    restart: always
+    environment:
+      - MINIO_ROOT_USER=minioadmin
+      - MINIO_ROOT_PASSWORD=minioadmin
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+
   catalog.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -67,8 +79,19 @@ services:
       - ASPNETCORE_HTTPS_PORTS=8081
       - Authority=https://identity.api:8081
       - ConnectionStrings__Catalog=Server=catalogdb;Port=5432;Database=CatalogDb;User Id=postgres;Password=postgres;Include Error Detail=true
+      - Minio__Endpoint=minio:9000
+      - Minio__AccessKey=minioadmin
+      - Minio__SecretKey=minioadmin
+      - Minio__BucketName=product-images
+      - Minio__UseSsl=false
+      - Minio__PublicBaseUrl=http://localhost:9000
+      - MessageBroker__Host=amqp://harvesthub-mq:5672
+      - MessageBroker__Username=guest
+      - MessageBroker__Password=guest
     depends_on:
       - catalogdb
+      - minio
+      - messagebroker
       - identity.api
     ports:
       - "6000:8080"
@@ -159,8 +182,12 @@ services:
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
       - ConnectionStrings__Identity=Server=identitydb;Database=IdentityDb;User Id=sa;Password=SwN12345678;Encrypt=False;TrustServerCertificate=True
+      - MessageBroker__Host=amqp://harvesthub-mq:5672
+      - MessageBroker__Username=guest
+      - MessageBroker__Password=guest
     depends_on:
       - identitydb
+      - messagebroker
     ports:
       - "6005:8080"
       - "6065:8081"

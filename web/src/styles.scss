@@ -1,0 +1,65 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$light-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: mat.$azure-palette,
+    tertiary: mat.$rose-palette
+  ),
+  typography: (
+    brand-family: 'Roboto, "Helvetica Neue", sans-serif'
+  ),
+  density: (
+    scale: 0
+  )
+));
+
+$dark-theme: mat.define-theme((
+  color: (
+    theme-type: dark,
+    primary: mat.$azure-palette,
+    tertiary: mat.$rose-palette
+  ),
+  typography: (
+    brand-family: 'Roboto, "Helvetica Neue", sans-serif'
+  ),
+  density: (
+    scale: 0
+  )
+));
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  transition: background-color 200ms ease, color 200ms ease;
+}
+
+body.theme-light {
+  @include mat.all-component-themes($light-theme);
+}
+
+body.theme-dark {
+  @include mat.all-component-themes($dark-theme);
+}
+
+.cart-badge.mat-badge-above .mat-badge-content {
+  top: 2px;
+  right: -4px;
+}
+
+.cart-badge .mat-badge-content {
+  font-size: 11px;
+  line-height: 18px;
+  height: 18px;
+  min-width: 18px;
+  padding: 0 4px;
+}

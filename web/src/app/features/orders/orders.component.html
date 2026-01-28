@@ -29,8 +29,8 @@
             <div class="muted">Order #{{ shortId(order.id) }}</div>
           </div>
           <div class="order-meta">
-            <span class="status" [class.pending]="order.status === 'Pending'">
-              {{ order.status }}
+            <span class="status" [class.pending]="statusLabel(order.status) === 'Pending'">
+              {{ statusLabel(order.status) }}
             </span>
             <span class="items">{{ order.items.length }} items</span>
             <span class="total">{{ getTotal(order) | currency }}</span>

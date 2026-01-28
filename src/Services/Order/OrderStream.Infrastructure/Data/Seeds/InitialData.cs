@@ -13,7 +13,10 @@ internal static class InitialData
         Product.Create(ProductId.Of(new Guid("5334c996-8457-4cf0-815c-ed2b77c4ff61")), "Mango", 950),
         Product.Create(ProductId.Of(new Guid("c67d6323-e8b1-4bdf-9a75-b0d0d2e7e914")), "Oreo", 30),
         Product.Create(ProductId.Of(new Guid("4f136e9f-ff8c-4c1f-9a33-d12f689bdab8")), "Lady Fingers", 150),
-        Product.Create(ProductId.Of(new Guid("6ec1297b-ec0a-4aa1-be25-6726e3b51a27")), "Amul Milk", 55)
+        Product.Create(ProductId.Of(new Guid("6ec1297b-ec0a-4aa1-be25-6726e3b51a27")), "Grapes", 120),
+        Product.Create(ProductId.Of(new Guid("b786103d-c621-4f5a-b498-23452610f88c")), "Balaji Waffers", 30),
+        Product.Create(ProductId.Of(new Guid("c4bbc4a2-4555-45d8-97cc-2a99b2167bff")), "Kurkure Solid Masti", 25),
+        Product.Create(ProductId.Of(new Guid("93170c85-7795-489c-8e8f-7dcf3b4f4188")), "Amul Milk", 55)
     ];
 
     public static IEnumerable<Order> OrdersWithItems
@@ -46,7 +49,8 @@ internal static class InitialData
                             payment2);
 
             order2.Add(ProductId.Of(new Guid("4f136e9f-ff8c-4c1f-9a33-d12f689bdab8")), 1, 150);
-            order2.Add(ProductId.Of(new Guid("6ec1297b-ec0a-4aa1-be25-6726e3b51a27")), 2, 110);
+            order2.Add(ProductId.Of(new Guid("6ec1297b-ec0a-4aa1-be25-6726e3b51a27")), 1, 120);
+            order2.Add(ProductId.Of(new Guid("93170c85-7795-489c-8e8f-7dcf3b4f4188")), 2, 110);
 
             return [order1, order2];
         }

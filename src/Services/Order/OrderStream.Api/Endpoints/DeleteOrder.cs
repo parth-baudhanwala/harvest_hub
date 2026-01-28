@@ -21,6 +21,6 @@ public class DeleteOrder : ICarterModule
         .ProducesProblem(StatusCodes.Status404NotFound)
         .WithSummary("Delete Order")
         .WithDescription("Delete Order")
-        .RequireAuthorization("Write");
+        .RequireAuthorization("Admin");
     }
 }

@@ -1,10 +1,14 @@
 using BuildingBlocks.Behaviors;
 using BuildingBlocks.Exceptions.Handler;
+using BuildingBlocks.MessageBroker.MassTransit;
 using Catalog.Api.Data;
+using Catalog.Api.Storage;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.IdentityModel.Tokens;
+using Minio;
+using Microsoft.Extensions.Options;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -54,7 +58,8 @@ builder.Services
 
 builder.Services.AddAuthorizationBuilder()
     .AddPolicy("Read", config => config.RequireClaim("scope", "catalog_read"))
-    .AddPolicy("Write", config => config.RequireClaim("scope", "catalog_write"));
+    .AddPolicy("Write", config => config.RequireClaim("scope", "catalog_write"))
+    .AddPolicy("Admin", config => config.RequireRole("Admin"));
 
 builder.Services.AddCarter();
 
@@ -72,9 +77,25 @@ builder.Services.AddMarten(config =>
     config.Connection(catalogDbConnection);
 }).UseLightweightSessions();
 
+builder.Services.AddHttpClient();
+
+builder.Services.Configure<MinioStorageOptions>(builder.Configuration.GetSection("Minio"));
+builder.Services.AddSingleton<IMinioClient>(sp =>
+{
+    var options = sp.GetRequiredService<IOptions<MinioStorageOptions>>().Value;
+    return new MinioClient()
+        .WithEndpoint(options.Endpoint)
+        .WithCredentials(options.AccessKey, options.SecretKey)
+        .WithSSL(options.UseSsl)
+        .Build();
+});
+builder.Services.AddSingleton<IProductImageStorage, MinioProductImageStorage>();
+
 if (builder.Environment.IsDevelopment()) builder.Services.InitializeMartenWith<CatalogInitialData>();
 
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+
+builder.Services.AddMessageBroker(builder.Configuration);
 
 builder.Services.AddHealthChecks().AddNpgSql(catalogDbConnection);
 
@@ -92,10 +113,10 @@ app.MapCarter();
 
 app.UseExceptionHandler(options => { });
 
-app.UseHealthChecks("/health", new HealthCheckOptions
+app.MapHealthChecks("/health", new HealthCheckOptions
 {
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-});
+}).RequireAuthorization("Admin");
 
 #region hidden local exception handler
 //app.UseExceptionHandler(config =>

@@ -3,7 +3,9 @@
 public record CreateProductRequest(string Name,
                                    List<string> Categories,
                                    string Description,
-                                   string ImageFile,
+                                   string ImageFileName,
+                                   byte[] ImageBytes,
+                                   string? ImageContentType,
                                    decimal Price);
 
 public record CreateProductResponse(Guid Id);
@@ -24,6 +26,6 @@ public class CreateProductEndpoint : ICarterModule
         .WithDescription("Create Product")
         .Produces<CreateProductResponse>(StatusCodes.Status201Created)
         .ProducesProblem(StatusCodes.Status400BadRequest)
-        .RequireAuthorization("Write");
+        .RequireAuthorization("Admin");
     }
 }

@@ -34,11 +34,22 @@ public static class DatabaseSeeds
 
     private static async Task SeedProductAsync(ApplicationDbContext context)
     {
-        if (!await context.Products.AnyAsync())
+        var existing = await context.Products.ToListAsync();
+
+        foreach (var seedProduct in InitialData.Products)
         {
-            await context.Products.AddRangeAsync(InitialData.Products);
-            await context.SaveChangesAsync();
+            var current = existing.FirstOrDefault(p => p.Id == seedProduct.Id);
+            if (current is null)
+            {
+                context.Products.Add(seedProduct);
+            }
+            else
+            {
+                current.UpdateDetails(seedProduct.Name, seedProduct.Price);
+            }
         }
+
+        await context.SaveChangesAsync();
     }
 
     private static async Task SeedOrdersWithItemsAsync(ApplicationDbContext context)

@@ -19,4 +19,13 @@ public class Product : Entity<ProductId>
 
         return product;
     }
+
+    public void UpdateDetails(string name, decimal price)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(price);
+
+        Name = name;
+        Price = price;
+    }
 }

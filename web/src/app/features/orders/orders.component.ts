@@ -31,6 +31,12 @@ export class OrdersComponent {
   readonly orders = signal<Order[]>([]);
   readonly loading = signal(false);
   readonly productNames = signal<Record<string, string>>({});
+  readonly statusLabels: Record<number, string> = {
+    1: 'Draft',
+    2: 'Pending',
+    3: 'Completed',
+    4: 'Cancelled'
+  };
 
   constructor(
     private readonly orderService: OrderService,
@@ -68,6 +74,19 @@ export class OrdersComponent {
 
   productName(productId: string) {
     return this.productNames()[productId] ?? this.shortId(productId);
+  }
+
+  statusLabel(status: string | number) {
+    if (typeof status === 'number') {
+      return this.statusLabels[status] ?? `${status}`;
+    }
+
+    const numericStatus = Number(status);
+    if (!Number.isNaN(numericStatus) && this.statusLabels[numericStatus]) {
+      return this.statusLabels[numericStatus];
+    }
+
+    return status;
   }
 
   private loadProductNames(orders: Order[]) {

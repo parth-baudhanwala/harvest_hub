@@ -53,7 +53,8 @@ public static class DependencyInjection
 
         services.AddAuthorizationBuilder()
             .AddPolicy("Read", config => config.RequireClaim("scope", "order_read"))
-            .AddPolicy("Write", config => config.RequireClaim("scope", "order_write"));
+            .AddPolicy("Write", config => config.RequireClaim("scope", "order_write"))
+            .AddPolicy("Admin", config => config.RequireRole("Admin"));
 
         services.AddCarter();
 
@@ -69,10 +70,10 @@ public static class DependencyInjection
         app.UseAuthorization();
         app.MapCarter();
         app.UseExceptionHandler(options => { });
-        app.UseHealthChecks("/health", new HealthCheckOptions
+        app.MapHealthChecks("/health", new HealthCheckOptions
         {
             ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-        });
+        }).RequireAuthorization("Admin");
 
         return app;
     }
