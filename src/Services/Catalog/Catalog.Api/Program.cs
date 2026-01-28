@@ -4,11 +4,16 @@ using Catalog.Api.Data;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 var assembly = typeof(Program).Assembly;
 string catalogDbConnection = builder.Configuration.GetConnectionString("Catalog")!;
-string authority = builder.Configuration["Authority"]!;
+var jwtSettings = builder.Configuration.GetSection("JwtSettings");
+string issuer = jwtSettings["Issuer"]!;
+string audience = jwtSettings["Audience"]!;
+string signingKey = jwtSettings["SigningKey"]!;
 
 #region Services
 
@@ -20,13 +25,30 @@ builder.Services
     })
     .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
     {
-        options.Authority = authority;
         options.TokenValidationParameters = new()
         {
             ValidateIssuerSigningKey = true,
-            ValidateAudience = false,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signingKey)),
+            ValidateIssuer = true,
+            ValidIssuer = issuer,
+            ValidateAudience = true,
+            ValidAudience = audience,
             ValidateLifetime = true,
             ClockSkew = TimeSpan.Zero
+        };
+
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                if (string.IsNullOrWhiteSpace(context.Token)
+                    && context.Request.Cookies.TryGetValue("hh_access_token", out var cookieToken))
+                {
+                    context.Token = cookieToken;
+                }
+
+                return Task.CompletedTask;
+            }
         };
     });
 
@@ -65,8 +87,6 @@ var app = builder.Build();
 app.UseAuthentication();
 
 app.UseAuthorization();
-
-app.UseHttpsRedirection();
 
 app.MapCarter();
 

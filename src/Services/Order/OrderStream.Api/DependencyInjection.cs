@@ -1,6 +1,8 @@
 ﻿using BuildingBlocks.Exceptions.Handler;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 namespace OrderStream.Api;
@@ -17,13 +19,35 @@ public static class DependencyInjection
             })
             .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
             {
-                options.Authority = configuration["Authority"];
+                var jwtSettings = configuration.GetSection("JwtSettings");
+                var issuer = jwtSettings["Issuer"];
+                var audience = jwtSettings["Audience"];
+                var signingKey = jwtSettings["SigningKey"];
+
                 options.TokenValidationParameters = new()
                 {
                     ValidateIssuerSigningKey = true,
-                    ValidateAudience = false,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signingKey!)),
+                    ValidateIssuer = true,
+                    ValidIssuer = issuer,
+                    ValidateAudience = true,
+                    ValidAudience = audience,
                     ValidateLifetime = true,
                     ClockSkew = TimeSpan.Zero
+                };
+
+                options.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        if (string.IsNullOrWhiteSpace(context.Token)
+                            && context.Request.Cookies.TryGetValue("hh_access_token", out var cookieToken))
+                        {
+                            context.Token = cookieToken;
+                        }
+
+                        return Task.CompletedTask;
+                    }
                 };
             });
 

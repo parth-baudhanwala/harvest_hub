@@ -17,6 +17,6 @@ public class GetProductsByCategoryEndpoint : ICarterModule
         .WithDescription("Get Products By Category")
         .Produces<GetProductsByCategoryResponse>(StatusCodes.Status200OK)
         .ProducesProblem(StatusCodes.Status400BadRequest)
-        .RequireAuthorization("Read");
+        .AllowAnonymous();
     }
 }

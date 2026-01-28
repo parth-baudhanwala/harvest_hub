@@ -2,10 +2,14 @@ version: '3.4'
 
 services:
   catalogdb:
-    image: postgres
+    image: postgres:17
+    volumes:
+      - postgres_catalog:/var/lib/postgresql
 
   basketdb:
-    image: postgres
+    image: postgres:17
+    volumes:
+      - postgres_basket:/var/lib/postgresql
 
   distributedcache:
     image: redis
