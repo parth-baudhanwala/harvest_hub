@@ -1,4 +1,6 @@
-﻿using Catalog.Api.Storage;
+﻿using BuildingBlocks.MessageBroker.Events;
+using Catalog.Api.Storage;
+using MassTransit;
 
 namespace Catalog.Api.Products.CreateProduct;
 
@@ -26,7 +28,7 @@ public class CreateProductCommandValidator : AbstractValidator<CreateProductComm
     }
 }
 
-internal class CreateProductCommandHandler(IDocumentSession session, IProductImageStorage imageStorage)
+internal class CreateProductCommandHandler(IDocumentSession session, IProductImageStorage imageStorage, IPublishEndpoint publishEndpoint)
     : ICommandHandler<CreateProductCommand, CreateProductResult>
 {
     public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
@@ -55,6 +57,13 @@ internal class CreateProductCommandHandler(IDocumentSession session, IProductIma
 
         session.Store(product);
         await session.SaveChangesAsync(cancellationToken);
+
+        await publishEndpoint.Publish(new ProductUpsertedEvent
+        {
+            ProductId = product.Id,
+            Name = product.Name,
+            Price = product.Price
+        }, cancellationToken);
 
         return new CreateProductResult(product.Id);
     }

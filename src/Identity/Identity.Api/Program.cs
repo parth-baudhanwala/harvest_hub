@@ -1,6 +1,9 @@
+using BuildingBlocks.MessageBroker.Events;
+using BuildingBlocks.MessageBroker.MassTransit;
 using Identity.Api.Data.Context;
 using Identity.Api.Data.Seeds;
 using Identity.Api.Models;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
@@ -71,6 +74,7 @@ builder.Services
     });
 
 builder.Services.AddAuthorization();
+builder.Services.AddMessageBroker(builder.Configuration);
 
 var app = builder.Build();
 
@@ -84,7 +88,7 @@ app.UseCors("spa");
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapPost("/api/auth/register", async (RegisterRequest request, UserManager<IdentityUser> userManager) =>
+app.MapPost("/api/auth/register", async (RegisterRequest request, UserManager<IdentityUser> userManager, IPublishEndpoint publishEndpoint) =>
 {
     var existing = await userManager.FindByEmailAsync(request.Email);
     if (existing is not null)
@@ -104,6 +108,13 @@ app.MapPost("/api/auth/register", async (RegisterRequest request, UserManager<Id
     {
         return Results.BadRequest(new { message = result.Errors.First().Description });
     }
+
+    await publishEndpoint.Publish(new UserRegisteredEvent
+    {
+        UserId = user.Id,
+        Username = user.UserName ?? request.Username,
+        Email = user.Email ?? request.Email
+    });
 
     return Results.Ok(new { message = "User registered successfully." });
 });

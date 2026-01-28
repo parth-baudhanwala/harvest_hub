@@ -1,5 +1,6 @@
 using BuildingBlocks.Behaviors;
 using BuildingBlocks.Exceptions.Handler;
+using BuildingBlocks.MessageBroker.MassTransit;
 using Catalog.Api.Data;
 using Catalog.Api.Storage;
 using HealthChecks.UI.Client;
@@ -92,6 +93,8 @@ builder.Services.AddSingleton<IProductImageStorage, MinioProductImageStorage>();
 if (builder.Environment.IsDevelopment()) builder.Services.InitializeMartenWith<CatalogInitialData>();
 
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+
+builder.Services.AddMessageBroker(builder.Configuration);
 
 builder.Services.AddHealthChecks().AddNpgSql(catalogDbConnection);
 

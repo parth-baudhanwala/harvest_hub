@@ -85,9 +85,13 @@ services:
       - Minio__BucketName=product-images
       - Minio__UseSsl=false
       - Minio__PublicBaseUrl=http://localhost:9000
+      - MessageBroker__Host=amqp://harvesthub-mq:5672
+      - MessageBroker__Username=guest
+      - MessageBroker__Password=guest
     depends_on:
       - catalogdb
       - minio
+      - messagebroker
       - identity.api
     ports:
       - "6000:8080"
@@ -178,8 +182,12 @@ services:
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
       - ConnectionStrings__Identity=Server=identitydb;Database=IdentityDb;User Id=sa;Password=SwN12345678;Encrypt=False;TrustServerCertificate=True
+      - MessageBroker__Host=amqp://harvesthub-mq:5672
+      - MessageBroker__Username=guest
+      - MessageBroker__Password=guest
     depends_on:
       - identitydb
+      - messagebroker
     ports:
       - "6005:8080"
       - "6065:8081"

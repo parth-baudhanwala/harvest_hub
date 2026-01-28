@@ -1,11 +1,14 @@
-﻿using Catalog.Api.Storage;
+﻿using BuildingBlocks.MessageBroker.Events;
+using Catalog.Api.Storage;
 using Marten.Schema;
+using MassTransit;
 
 namespace Catalog.Api.Data;
 
 public class CatalogInitialData(
     IHttpClientFactory httpClientFactory,
     IProductImageStorage imageStorage,
+    IBus bus,
     ILogger<CatalogInitialData> logger) : IInitialData
 {
     public async Task Populate(IDocumentStore store, CancellationToken cancellation)
@@ -61,6 +64,16 @@ public class CatalogInitialData(
         // Marten UPSERT will cater for existing records
         session.Store(products);
         await session.SaveChangesAsync(cancellation);
+
+        foreach (var product in products)
+        {
+            await bus.Publish(new ProductUpsertedEvent
+            {
+                ProductId = product.Id,
+                Name = product.Name,
+                Price = product.Price
+            }, cancellation);
+        }
     }
 
     private static IEnumerable<Product> GetPreconfiguredProducts() =>

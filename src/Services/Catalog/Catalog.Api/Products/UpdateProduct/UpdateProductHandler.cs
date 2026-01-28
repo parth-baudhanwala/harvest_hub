@@ -1,4 +1,7 @@
-﻿namespace Catalog.Api.Products.UpdateProduct;
+﻿using BuildingBlocks.MessageBroker.Events;
+using MassTransit;
+
+namespace Catalog.Api.Products.UpdateProduct;
 
 public record UpdateProductCommand(Guid Id,
                                    string Name,
@@ -22,7 +25,7 @@ public class UpdateProductCommandValidator : AbstractValidator<UpdateProductComm
     }
 }
 
-internal class UpdateProductCommandHandler(IDocumentSession session)
+internal class UpdateProductCommandHandler(IDocumentSession session, IPublishEndpoint publishEndpoint)
     : ICommandHandler<UpdateProductCommand, UpdateProductResult>
 {
     public async Task<UpdateProductResult> Handle(UpdateProductCommand command, CancellationToken cancellationToken)
@@ -36,6 +39,13 @@ internal class UpdateProductCommandHandler(IDocumentSession session)
 
         session.Update(product);
         await session.SaveChangesAsync(cancellationToken);
+
+        await publishEndpoint.Publish(new ProductUpsertedEvent
+        {
+            ProductId = product.Id,
+            Name = product.Name,
+            Price = product.Price
+        }, cancellationToken);
 
         return new(true);
     }

@@ -1,4 +1,6 @@
-﻿using Identity.Api.Data.Context;
+﻿using BuildingBlocks.MessageBroker.Events;
+using Identity.Api.Data.Context;
+using MassTransit;
 using System.Security.Claims;
 
 namespace Identity.Api.Data.Seeds;
@@ -14,11 +16,12 @@ public static class DatabaseSeeds
         await aspNetIdentityContext.Database.MigrateAsync();
 
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+        var publishEndpoint = scope.ServiceProvider.GetRequiredService<IPublishEndpoint>();
 
-        await SeedUserAsync(userManager);
+        await SeedUserAsync(userManager, publishEndpoint);
     }
 
-    private static async Task SeedUserAsync(UserManager<IdentityUser> userManager)
+    private static async Task SeedUserAsync(UserManager<IdentityUser> userManager, IPublishEndpoint publishEndpoint)
     {
         IdentityUser? pbaudhanwala = await userManager.FindByNameAsync("pbaudhanwala");
 
@@ -41,6 +44,13 @@ public static class DatabaseSeeds
             throw new InvalidOperationException(result.Errors.First().Description);
         }
 
+        await publishEndpoint.Publish(new UserRegisteredEvent
+        {
+            UserId = pbaudhanwala.Id,
+            Username = pbaudhanwala.UserName ?? string.Empty,
+            Email = pbaudhanwala.Email ?? string.Empty
+        });
+
         IEnumerable<Claim> claims =
         [
             new Claim(ClaimTypes.Name, "Parth Baudhanwala"),
@@ -58,5 +68,4 @@ public static class DatabaseSeeds
             throw new InvalidOperationException(result.Errors.First().Description);
         }
     }
-
 }
