@@ -1,0 +1,56 @@
+<section class="filters">
+  <mat-form-field appearance="outline">
+    <mat-label>Search products</mat-label>
+    <input matInput [formControl]="searchControl" placeholder="Search by name" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Category</mat-label>
+    <mat-select [formControl]="categoryControl">
+      <mat-option value="">All</mat-option>
+      @for (category of categories(); track category) {
+        <mat-option [value]="category">
+          {{ category }}
+        </mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+</section>
+
+@if (!loading()) {
+  <section class="grid">
+    @for (product of products(); track product.id) {
+      <mat-card class="product-card">
+        <img
+          mat-card-image
+          [src]="product.imageFile || placeholderImage"
+          [alt]="product.name"
+          (error)="onImageError($event)"
+        />
+        <mat-card-title class="product-title">{{ product.name }}</mat-card-title>
+        <mat-card-subtitle class="product-price">{{ product.price | currency }}</mat-card-subtitle>
+        <mat-card-content class="product-content">
+          <p>{{ product.description }}</p>
+        </mat-card-content>
+        <mat-card-actions class="product-actions">
+          <a mat-button [routerLink]="['/catalog', product.id]">View</a>
+          <button mat-raised-button color="primary" (click)="addToCart(product)">Add to cart</button>
+        </mat-card-actions>
+      </mat-card>
+    }
+  </section>
+} @else {
+  <div class="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+}
+
+@if (!categoryControl.value) {
+  <mat-paginator
+    [length]="total()"
+    [pageIndex]="pageIndex()"
+    [pageSize]="pageSize()"
+    [pageSizeOptions]="[5, 10, 20]"
+    (page)="onPageChange($event)"
+  ></mat-paginator>
+}

@@ -1,0 +1,85 @@
+@if (basketService.basket(); as basket) {
+  @if (basket.items.length) {
+    <mat-card class="cart">
+      <div class="cart-header">
+        <div>
+          <h2>Your Cart</h2>
+          <p class="muted">Review your items before checkout.</p>
+        </div>
+        <button mat-stroked-button routerLink="/catalog">Continue shopping</button>
+      </div>
+
+      <div class="cart-table">
+        <div class="cart-row cart-head">
+          <span>Item</span>
+          <span>Price</span>
+          <span>Qty</span>
+          <span>Total</span>
+          <span></span>
+        </div>
+
+        @for (item of basket.items; track item.productId) {
+          <div class="cart-row">
+            <div class="item">
+              <div>
+                <div class="item-name">{{ item.productName }}</div>
+                <div class="muted">{{ item.description || 'Fresh product from Harvest Hub.' }}</div>
+              </div>
+            </div>
+            <div class="price">{{ item.price | currency }}</div>
+            <mat-form-field appearance="outline" class="quantity">
+              <mat-label>Qty</mat-label>
+              <input
+                matInput
+                type="number"
+                [value]="item.quantity"
+                min="0"
+                (change)="updateQuantity(item, $any($event.target).value)"
+              />
+            </mat-form-field>
+            <div class="line-total">{{ item.price * item.quantity | currency }}</div>
+            <button mat-icon-button color="warn" (click)="removeItem(item)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        }
+      </div>
+
+      <div class="cart-footer">
+        <div class="summary">
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <strong>{{ basket.totalPrice | currency }}</strong>
+          </div>
+          <div class="summary-row muted">
+            <span>Taxes</span>
+            <span>Calculated at checkout</span>
+          </div>
+        </div>
+        <div class="actions">
+          <button
+            mat-raised-button
+            color="primary"
+            routerLink="/checkout"
+            [disabled]="!authService.isAuthenticated()"
+          >
+            Checkout
+          </button>
+          @if (!authService.isAuthenticated()) {
+            <p class="hint">
+              Sign in to continue to checkout.
+            </p>
+          }
+        </div>
+      </div>
+    </mat-card>
+  } @else {
+    <mat-card class="empty">
+      <div>
+        <h2>Your cart is empty</h2>
+        <p class="muted">Browse fresh products and add them to your cart.</p>
+      </div>
+      <button mat-raised-button color="primary" routerLink="/catalog">Browse products</button>
+    </mat-card>
+  }
+}
