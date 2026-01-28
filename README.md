@@ -1,6 +1,6 @@
 # 🥬 HarvestHub
 
-HarvestHub is a **grocery delivery platform** (think BigBasket-style) built as a modern microservices stack with an Angular SPA frontend. It’s designed for local development with containers and a clean service boundary architecture.
+HarvestHub is a **grocery delivery platform** built as a modern microservices stack with an Angular SPA frontend. It’s designed for local development with containers and a clean service boundary architecture.
 
 ## ✨ Highlights
 - 🧩 **Microservices** with .NET 8, MediatR, Carter, FluentValidation
