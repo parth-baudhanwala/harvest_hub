@@ -1,6 +1,7 @@
 ﻿using BuildingBlocks.MessageBroker.Events;
 using Identity.Api.Data.Context;
 using MassTransit;
+using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
 namespace Identity.Api.Data.Seeds;
@@ -16,12 +17,26 @@ public static class DatabaseSeeds
         await aspNetIdentityContext.Database.MigrateAsync();
 
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
         var publishEndpoint = scope.ServiceProvider.GetRequiredService<IPublishEndpoint>();
 
-        await SeedUserAsync(userManager, publishEndpoint);
+        await SeedRolesAsync(roleManager);
+        await SeedUserAsync(userManager, roleManager, publishEndpoint);
     }
 
-    private static async Task SeedUserAsync(UserManager<IdentityUser> userManager, IPublishEndpoint publishEndpoint)
+    private static async Task SeedRolesAsync(RoleManager<IdentityRole> roleManager)
+    {
+        if (!await roleManager.RoleExistsAsync("Admin"))
+        {
+            var result = await roleManager.CreateAsync(new IdentityRole("Admin"));
+            if (!result.Succeeded)
+            {
+                throw new InvalidOperationException(result.Errors.First().Description);
+            }
+        }
+    }
+
+    private static async Task SeedUserAsync(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, IPublishEndpoint publishEndpoint)
     {
         IdentityUser? pbaudhanwala = await userManager.FindByNameAsync("pbaudhanwala");
 
@@ -66,6 +81,15 @@ public static class DatabaseSeeds
         if (!result.Succeeded)
         {
             throw new InvalidOperationException(result.Errors.First().Description);
+        }
+
+        if (!await userManager.IsInRoleAsync(pbaudhanwala, "Admin"))
+        {
+            result = await userManager.AddToRoleAsync(pbaudhanwala, "Admin");
+            if (!result.Succeeded)
+            {
+                throw new InvalidOperationException(result.Errors.First().Description);
+            }
         }
     }
 }

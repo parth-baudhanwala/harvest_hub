@@ -128,15 +128,21 @@ app.MapPost("/api/auth/login", async (LoginRequest request, UserManager<Identity
     }
 
     var roles = await userManager.GetRolesAsync(user);
-    var scopeClaims = new[]
+    var scopes = new List<string>
     {
         "catalog_read",
-        "catalog_write",
         "basket_read",
         "basket_write",
         "order_read",
         "order_write"
-    }.Select(scope => new Claim("scope", scope));
+    };
+
+    if (roles.Contains("Admin"))
+    {
+        scopes.Add("catalog_write");
+    }
+
+    var scopeClaims = scopes.Select(scope => new Claim("scope", scope));
 
     var claims = new List<Claim>
     {

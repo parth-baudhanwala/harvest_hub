@@ -20,6 +20,6 @@ public class DeleteProductEndpoint : ICarterModule
         .Produces<DeleteProductResponse>(StatusCodes.Status200OK)
         .ProducesProblem(StatusCodes.Status400BadRequest)
         .ProducesProblem(StatusCodes.Status404NotFound)
-        .RequireAuthorization("Write");
+        .RequireAuthorization("Admin");
     }
 }

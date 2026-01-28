@@ -58,7 +58,8 @@ builder.Services
 
 builder.Services.AddAuthorizationBuilder()
     .AddPolicy("Read", config => config.RequireClaim("scope", "catalog_read"))
-    .AddPolicy("Write", config => config.RequireClaim("scope", "catalog_write"));
+    .AddPolicy("Write", config => config.RequireClaim("scope", "catalog_write"))
+    .AddPolicy("Admin", config => config.RequireRole("Admin"));
 
 builder.Services.AddCarter();
 
@@ -112,10 +113,10 @@ app.MapCarter();
 
 app.UseExceptionHandler(options => { });
 
-app.UseHealthChecks("/health", new HealthCheckOptions
+app.MapHealthChecks("/health", new HealthCheckOptions
 {
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-});
+}).RequireAuthorization("Admin");
 
 #region hidden local exception handler
 //app.UseExceptionHandler(config =>

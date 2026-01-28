@@ -57,7 +57,8 @@ builder.Services
 
 builder.Services.AddAuthorizationBuilder()
     .AddPolicy("Read", config => config.RequireClaim("scope", "basket_read"))
-    .AddPolicy("Write", config => config.RequireClaim("scope", "basket_write"));
+    .AddPolicy("Write", config => config.RequireClaim("scope", "basket_write"))
+    .AddPolicy("Admin", config => config.RequireRole("Admin"));
 
 builder.Services.AddCarter();
 
@@ -86,12 +87,15 @@ builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(
 })
 .ConfigurePrimaryHttpMessageHandler(() =>
 {
-    HttpClientHandler handler = new()
+    if (builder.Environment.IsDevelopment())
     {
-        ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
-    };
+        return new HttpClientHandler
+        {
+            ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+        };
+    }
 
-    return handler;
+    return new HttpClientHandler();
 });
 
 builder.Services.AddMessageBroker(builder.Configuration);
@@ -129,9 +133,9 @@ app.MapCarter();
 
 app.UseExceptionHandler(options => { });
 
-app.UseHealthChecks("/health", new HealthCheckOptions
+app.MapHealthChecks("/health", new HealthCheckOptions
 {
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-});
+}).RequireAuthorization("Admin");
 
 await app.RunAsync();
