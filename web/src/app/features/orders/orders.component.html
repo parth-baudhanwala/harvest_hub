@@ -1,0 +1,76 @@
+<mat-card class="orders">
+  <div class="orders-header">
+    <div>
+      <h2>Orders</h2>
+      <p class="muted">Track your recent orders and item details.</p>
+    </div>
+  </div>
+
+  @if (!auth.customerId()) {
+    <div class="notice">
+      Sign in to view your orders.
+    </div>
+  }
+
+  @if (loading()) {
+    <div class="loading">
+      <mat-spinner></mat-spinner>
+    </div>
+  }
+
+  @if (orders().length) {
+    <mat-accordion class="orders-list">
+      @for (order of orders(); track order.id) {
+        <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <div class="panel-header">
+          <div>
+            <div class="order-name">{{ order.name }}</div>
+            <div class="muted">Order #{{ shortId(order.id) }}</div>
+          </div>
+          <div class="order-meta">
+            <span class="status" [class.pending]="order.status === 'Pending'">
+              {{ order.status }}
+            </span>
+            <span class="items">{{ order.items.length }} items</span>
+            <span class="total">{{ getTotal(order) | currency }}</span>
+          </div>
+        </div>
+      </mat-expansion-panel-header>
+
+      <div class="items-table">
+        <div class="items-header">
+          <span>Product</span>
+          <span>Price</span>
+          <span>Qty</span>
+          <span>Total</span>
+        </div>
+        @for (item of order.items; track item.productId) {
+          <div class="item-row">
+            <div>
+              <div class="item-name">{{ productName(item.productId) }}</div>
+            </div>
+            <div>{{ item.price | currency }}</div>
+            <div>{{ item.quantity }}</div>
+            <div>{{ getOrderItemTotal(item.price, item.quantity) | currency }}</div>
+          </div>
+        }
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div class="panel-footer">
+        <div class="muted">Shipping and billing details are available on request.</div>
+        <div class="total">Order total: {{ getTotal(order) | currency }}</div>
+      </div>
+        </mat-expansion-panel>
+      }
+    </mat-accordion>
+  }
+
+  @if (!loading() && !orders().length && auth.customerId()) {
+    <div class="empty">
+      <p>No orders found for this customer.</p>
+    </div>
+  }
+</mat-card>

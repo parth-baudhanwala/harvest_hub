@@ -1,0 +1,33 @@
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #ffffff;
+  color: #111827;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.brand {
+  color: #111827;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.page {
+  padding: 1.5rem;
+}
+
+.cart-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.auth-spacer {
+  width: 1rem;
+}

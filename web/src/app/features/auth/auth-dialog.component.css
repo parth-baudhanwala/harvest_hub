@@ -1,0 +1,25 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.mode-toggle {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0 1.5rem 0.5rem;
+}
+
+.full {
+  width: 100%;
+}
+
+.hint {
+  margin: 0 0 0.5rem;
+  color: #6b7280;
+}
+
+.error {
+  color: #ef4444;
+  font-size: 0.9rem;
+}

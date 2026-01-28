@@ -1,0 +1,34 @@
+<mat-toolbar class="toolbar">
+  <a class="brand" routerLink="/">Harvest Hub</a>
+  <span class="spacer"></span>
+  <a mat-button routerLink="/catalog">Catalog</a>
+  <a mat-button routerLink="/orders" [disabled]="!auth.isAuthenticated()">Orders</a>
+  <a
+    mat-button
+    routerLink="/cart"
+    class="cart-link"
+    [matBadge]="cartCount()"
+    matBadgeColor="accent"
+    matBadgeOverlap="true"
+    matBadgePosition="above after"
+    matBadgeClass="cart-badge"
+  >
+    <mat-icon>shopping_cart</mat-icon>
+    Cart
+  </a>
+  <span class="auth-spacer"></span>
+  @if (!auth.isAuthenticated()) {
+    <button mat-raised-button color="primary" (click)="openAuthDialog()">
+      Sign in
+    </button>
+  }
+  @if (auth.isAuthenticated()) {
+    <button mat-stroked-button color="primary" (click)="signOut()">
+      Sign out
+    </button>
+  }
+</mat-toolbar>
+
+<main class="page">
+  <router-outlet></router-outlet>
+</main>

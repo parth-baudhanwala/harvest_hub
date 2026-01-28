@@ -1,0 +1,83 @@
+<h2 mat-dialog-title>{{ title() }}</h2>
+
+<div class="mode-toggle">
+  <button mat-button [disabled]="mode() === 'login'" (click)="switchMode('login')">Sign in</button>
+  <button mat-button [disabled]="mode() === 'register'" (click)="switchMode('register')">
+    Register
+  </button>
+</div>
+
+<div mat-dialog-content class="content">
+  @if (mode() === 'login') {
+    <p class="hint">Use your email and password.</p>
+  }
+  @if (mode() === 'register') {
+    <p class="hint">Create a new account to continue.</p>
+  }
+
+  @if (mode() === 'login') {
+    <form [formGroup]="loginForm">
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" placeholder="you@example.com" />
+      @if (loginForm.get('email')?.invalid) {
+        <mat-error>Valid email is required.</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" formControlName="password" />
+      @if (loginForm.get('password')?.invalid) {
+        <mat-error>Password is required.</mat-error>
+      }
+    </mat-form-field>
+    </form>
+  }
+
+  @if (mode() === 'register') {
+    <form [formGroup]="registerForm">
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="username" />
+      @if (registerForm.get('username')?.invalid) {
+        <mat-error>Username is required.</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" placeholder="you@example.com" />
+      @if (registerForm.get('email')?.invalid) {
+        <mat-error>Valid email is required.</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" formControlName="password" />
+      @if (registerForm.get('password')?.invalid) {
+        <mat-error>
+          Minimum 6 characters.
+        </mat-error>
+      }
+    </mat-form-field>
+    </form>
+  }
+
+  @if (error()) {
+    <div class="error">{{ error() }}</div>
+  }
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button color="primary" (click)="submit()" [disabled]="loading()">
+    @if (loading()) {
+      <mat-spinner diameter="18"></mat-spinner>
+    }
+    @if (!loading()) {
+      <span>{{ mode() === 'login' ? 'Sign in' : 'Register' }}</span>
+    }
+  </button>
+</div>

@@ -1,0 +1,36 @@
+@if (!loading()) {
+  @if (product(); as item) {
+    <mat-card class="product-detail">
+      <div class="detail-grid">
+        <img
+          class="detail-image"
+          [src]="item.imageFile || placeholderImage"
+          [alt]="item.name"
+          (error)="onImageError($event)"
+        />
+        <div class="detail-content">
+          <div class="detail-header">
+            <h2>{{ item.name }}</h2>
+            <span class="price">{{ item.price | currency }}</span>
+          </div>
+          <p class="description">{{ item.description }}</p>
+          <div class="chips">
+            @for (category of item.categories; track category) {
+              <span class="chip">{{ category }}</span>
+            }
+          </div>
+          <div class="actions">
+            <button mat-raised-button color="primary" (click)="addToCart(item)">
+              Add to cart
+            </button>
+            <a mat-stroked-button routerLink="/catalog">Back to catalog</a>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  }
+} @else {
+  <div class="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+}
