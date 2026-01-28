@@ -80,6 +80,12 @@ export class CheckoutComponent {
     const username = this.auth.username();
     if (!username) return;
 
+    const customerId = this.form.getRawValue().customerId || this.auth.customerId();
+    if (!customerId) {
+      this.snackBar.open('Please sign in to complete checkout.', 'Close', { duration: 3000 });
+      return;
+    }
+
     const raw = this.form.getRawValue();
     const payload = {
       username,
@@ -87,7 +93,7 @@ export class CheckoutComponent {
       expiration: raw.expirationMonth && raw.expirationYear
         ? `${raw.expirationMonth}/${raw.expirationYear.slice(-2)}`
         : '',
-      customerId: raw.customerId || this.auth.customerId() || crypto.randomUUID()
+      customerId
     };
 
     this.basketService.checkout(payload).subscribe((response) => {
