@@ -2,13 +2,13 @@
   position: sticky;
   top: 0;
   z-index: 10;
-  background: #ffffff;
-  color: #111827;
-  border-bottom: 1px solid #e5e7eb;
+  background: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
 }
 
 .brand {
-  color: #111827;
+  color: var(--mat-sys-on-surface);
   text-decoration: none;
   font-weight: 600;
   font-size: 1.1rem;
@@ -30,4 +30,8 @@
 
 .auth-spacer {
   width: 1rem;
+}
+
+.theme-toggle {
+  margin-left: 0.25rem;
 }

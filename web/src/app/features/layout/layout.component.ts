@@ -10,6 +10,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { AuthApiService } from '../../core/auth/auth-api.service';
 import { AuthService } from '../../core/auth/auth.service';
 import { BasketService } from '../../core/services/basket.service';
+import { ThemeService } from '../../core/theme/theme.service';
 import { AuthDialogComponent } from '../auth/auth-dialog.component';
 
 @Component({
@@ -33,6 +34,7 @@ export class LayoutComponent {
 
   readonly auth = inject(AuthService);
   readonly basket = inject(BasketService);
+  readonly theme = inject(ThemeService);
   readonly cartCount = computed(() =>
     (this.basket.basket()?.items ?? []).reduce((sum, item) => sum + item.quantity, 0)
   );

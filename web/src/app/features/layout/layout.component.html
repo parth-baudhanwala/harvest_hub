@@ -16,6 +16,16 @@
     <mat-icon>shopping_cart</mat-icon>
     Cart
   </a>
+  <button
+    mat-icon-button
+    class="theme-toggle"
+    aria-label="Toggle theme"
+    (click)="theme.toggleTheme()"
+  >
+    <mat-icon>
+      {{ theme.theme() === 'dark' ? 'dark_mode' : 'light_mode' }}
+    </mat-icon>
+  </button>
   <span class="auth-spacer"></span>
   @if (!auth.isAuthenticated()) {
     <button mat-raised-button color="primary" (click)="openAuthDialog()">
