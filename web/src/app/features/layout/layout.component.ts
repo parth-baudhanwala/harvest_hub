@@ -38,6 +38,7 @@ export class LayoutComponent {
   readonly cartCount = computed(() =>
     (this.basket.basket()?.items ?? []).reduce((sum, item) => sum + item.quantity, 0)
   );
+  readonly currentYear = new Date().getFullYear();
 
   openAuthDialog() {
     this.dialog.open(AuthDialogComponent, {
