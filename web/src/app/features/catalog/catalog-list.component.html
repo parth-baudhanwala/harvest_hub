@@ -28,7 +28,7 @@
           (error)="onImageError($event)"
         />
         <mat-card-title class="product-title">{{ product.name }}</mat-card-title>
-        <mat-card-subtitle class="product-price">{{ product.price | currency }}</mat-card-subtitle>
+        <mat-card-subtitle class="product-price">{{ product.price | currency:'INR':'symbol' }}</mat-card-subtitle>
         <mat-card-content class="product-content">
           <p>{{ product.description }}</p>
         </mat-card-content>

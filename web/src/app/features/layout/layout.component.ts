@@ -40,6 +40,10 @@ export class LayoutComponent {
   );
   readonly currentYear = new Date().getFullYear();
 
+  constructor() {
+    this.auth.refreshSession().subscribe();
+  }
+
   openAuthDialog() {
     this.dialog.open(AuthDialogComponent, {
       width: '420px'
