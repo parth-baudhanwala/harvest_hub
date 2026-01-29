@@ -31,5 +31,10 @@ export const routes: Routes = [
 			}
 		]
 	},
+	{
+		path: 'admin',
+		loadChildren: () =>
+			import('./features/admin/admin.routes').then((m) => m.adminRoutes)
+	},
 	{ path: '**', redirectTo: 'catalog' }
 ];

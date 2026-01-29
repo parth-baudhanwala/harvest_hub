@@ -17,6 +17,25 @@ interface GetProductsByCategoryResponse {
   products: Product[];
 }
 
+export interface CreateProductRequest {
+  name: string;
+  categories: string[];
+  description: string;
+  imageFileName: string;
+  imageBytes: string;
+  imageContentType?: string | null;
+  price: number;
+}
+
+export interface UpdateProductRequest {
+  id: string;
+  name: string;
+  categories: string[];
+  description: string;
+  imageFile: string;
+  price: number;
+}
+
 @Injectable({ providedIn: 'root' })
 export class CatalogService {
   constructor(private readonly api: ApiService) {}
@@ -40,5 +59,17 @@ export class CatalogService {
     return this.api
       .get<GetProductByIdResponse>(`/catalog-service/products/${id}`)
       .pipe(map((response) => response.product));
+  }
+
+  createProduct(payload: CreateProductRequest) {
+    return this.api.post<{ id: string }>(`/catalog-service/products`, payload);
+  }
+
+  updateProduct(payload: UpdateProductRequest) {
+    return this.api.put<{ isSuccess: boolean }>(`/catalog-service/products`, payload);
+  }
+
+  deleteProduct(id: string) {
+    return this.api.delete<void>(`/catalog-service/products/${encodeURIComponent(id)}`);
   }
 }

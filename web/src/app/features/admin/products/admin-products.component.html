@@ -1,0 +1,65 @@
+<section class="products-layout">
+  <mat-card class="table-card">
+    <div class="header-row">
+      <div>
+        <h2>Products</h2>
+        <p class="muted">Manage catalog listings.</p>
+      </div>
+      <button mat-stroked-button color="primary" (click)="openCreateDialog()">
+        <mat-icon>add</mat-icon>
+        New product
+      </button>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    @if (loading()) {
+      <div class="loading">
+        <mat-progress-spinner mode="indeterminate" diameter="36"></mat-progress-spinner>
+      </div>
+    } @else {
+      <div class="table-wrapper">
+        <table mat-table [dataSource]="products()" class="mat-elevation-z0">
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let product">{{ product.name }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef>Price</th>
+            <td mat-cell *matCellDef="let product">₹ {{ product.price }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="categories">
+            <th mat-header-cell *matHeaderCellDef>Categories</th>
+            <td mat-cell *matCellDef="let product">{{ product.categories.join(', ') }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let product" class="actions">
+              <button mat-icon-button color="primary" (click)="openEditDialog(product)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="deleteProduct(product)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
+
+      <mat-paginator
+        [length]="totalCount()"
+        [pageIndex]="pageIndex()"
+        [pageSize]="pageSize()"
+        [pageSizeOptions]="[5, 10, 20]"
+        (page)="handlePage($event)"
+      ></mat-paginator>
+    }
+  </mat-card>
+
+</section>

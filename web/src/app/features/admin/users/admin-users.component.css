@@ -1,0 +1,37 @@
+.users-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.table-card {
+  padding: 1.5rem;
+}
+
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.muted {
+  color: var(--mat-sys-on-surface-variant, #5f6368);
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  margin-top: 1rem;
+}
+
+.actions {
+  gap: 0.25rem;
+  align-items: center;
+}
+
+.loading {
+  display: grid;
+  place-items: center;
+  padding: 2rem 0;
+}

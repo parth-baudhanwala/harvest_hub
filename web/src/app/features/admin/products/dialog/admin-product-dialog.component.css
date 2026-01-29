@@ -1,0 +1,94 @@
+:host ::ng-deep .mat-mdc-dialog-surface {
+  border-radius: 18px;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.2);
+}
+
+:host ::ng-deep .mat-mdc-dialog-title {
+  padding: 24px 24px 0;
+  font-weight: 600;
+}
+
+:host ::ng-deep .mat-mdc-dialog-content {
+  padding: 12px 24px 0;
+}
+
+:host ::ng-deep .mat-mdc-dialog-actions {
+  padding: 16px 24px 20px;
+}
+
+.dialog-content {
+  display: grid;
+  gap: 0.75rem;
+  min-width: 320px;
+}
+
+.dialog-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.dialog-form mat-form-field {
+  width: 100%;
+}
+
+.muted {
+  color: var(--mat-sys-on-surface-variant, #5f6368);
+}
+
+.upload {
+  border: 1px dashed rgba(0, 0, 0, 0.18);
+  border-radius: 12px;
+  padding: 1rem;
+  display: grid;
+  gap: 0.75rem;
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.upload-header {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.upload-title {
+  font-weight: 600;
+}
+
+.upload-subtitle {
+  font-size: 0.85rem;
+  color: var(--mat-sys-on-surface-variant, #5f6368);
+}
+
+.upload-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.upload-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  cursor: pointer;
+  font-weight: 500;
+  background: #fff;
+}
+
+.upload-actions input[type='file'] {
+  display: none;
+}
+
+.file-name {
+  font-size: 0.85rem;
+  color: var(--mat-sys-on-surface-variant, #5f6368);
+}
+
+
+.error {
+  color: var(--mat-sys-error, #b3261e);
+  font-size: 0.9rem;
+}

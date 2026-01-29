@@ -1,0 +1,61 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  --toolbar-height: 64px;
+  --toolbar-bg: #eef0f3;
+  --toolbar-border: rgba(0, 0, 0, 0.08);
+}
+
+:host-context(body.theme-dark) {
+  --toolbar-bg: #1f2226;
+  --toolbar-border: rgba(255, 255, 255, 0.12);
+}
+
+.toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: var(--toolbar-bg);
+  color: var(--mat-sys-on-surface);
+  border-bottom: 1px solid var(--toolbar-border);
+  height: var(--toolbar-height);
+}
+
+.brand {
+  color: var(--mat-sys-on-surface);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.page {
+  padding: 1.5rem;
+  padding-top: calc(1.5rem + var(--toolbar-height));
+  flex: 1 0 auto;
+}
+
+@media (max-width: 599px) {
+  :host {
+    --toolbar-height: 56px;
+  }
+}
+
+.auth-spacer {
+  width: 0.75rem;
+}
+
+.admin-name {
+  margin-right: 0.75rem;
+  font-weight: 500;
+}
+
+.theme-toggle {
+  margin-left: 0.25rem;
+}

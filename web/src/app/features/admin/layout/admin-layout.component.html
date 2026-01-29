@@ -1,0 +1,28 @@
+<mat-toolbar class="toolbar">
+  <a class="brand" routerLink="/admin/dashboard">Harvest Hub Admin</a>
+  <span class="spacer"></span>
+  <a mat-button routerLink="/admin/dashboard">Dashboard</a>
+  <a mat-button routerLink="/admin/products">Products</a>
+  <a mat-button routerLink="/admin/orders">Orders</a>
+  <a mat-button routerLink="/admin/users">Users</a>
+  <a mat-button routerLink="/admin/admins">Admins</a>
+  <button
+    mat-icon-button
+    class="theme-toggle"
+    aria-label="Toggle theme"
+    (click)="theme.toggleTheme()"
+  >
+    <mat-icon>
+      {{ theme.theme() === 'dark' ? 'dark_mode' : 'light_mode' }}
+    </mat-icon>
+  </button>
+  <span class="auth-spacer"></span>
+  <span class="admin-name">{{ displayName() }}</span>
+  <button mat-stroked-button color="primary" (click)="signOut()">
+    Sign out
+  </button>
+</mat-toolbar>
+
+<main class="page">
+  <router-outlet></router-outlet>
+</main>

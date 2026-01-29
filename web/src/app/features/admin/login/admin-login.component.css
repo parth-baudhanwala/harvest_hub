@@ -1,0 +1,43 @@
+.login-page {
+  min-height: calc(100vh - 3rem);
+  display: grid;
+  place-items: center;
+  padding: 2rem 1.5rem;
+}
+
+.login-card {
+  width: min(420px, 100%);
+  padding: 2rem;
+  display: grid;
+  gap: 1.25rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.subtitle {
+  margin: 0 0 0.5rem;
+  color: var(--mat-sys-on-surface-variant, #5f6368);
+}
+
+.login-form {
+  display: grid;
+  gap: 1.1rem;
+}
+
+.login-form mat-form-field {
+  width: 100%;
+}
+
+button[mat-raised-button] {
+  display: inline-flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.error {
+  color: var(--mat-sys-error, #b3261e);
+  font-size: 0.9rem;
+}

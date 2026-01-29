@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>Edit user</h2>
+
+<mat-dialog-content class="dialog-content">
+  <p class="muted">Update customer details.</p>
+
+  <form id="userForm" class="dialog-form" [formGroup]="form" (ngSubmit)="submit()">
+    <mat-form-field appearance="outline">
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="username" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" type="email" />
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-stroked-button type="button" (click)="cancel()">Cancel</button>
+  <button mat-raised-button color="primary" type="submit" form="userForm">Update</button>
+</mat-dialog-actions>

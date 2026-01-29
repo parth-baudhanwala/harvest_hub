@@ -66,12 +66,11 @@ export class AuthDialogComponent {
         .login(payload)
         .pipe(finalize(() => this.loading.set(false)))
         .subscribe({
-          next: (response) => {
-            this.auth.setSession({
-              username: response.user.userName ?? response.user.email,
-              customerId: response.user.id
+          next: () => {
+            this.auth.refreshSession().subscribe({
+              next: () => this.dialogRef.close(),
+              error: () => this.dialogRef.close()
             });
-            this.dialogRef.close();
           },
           error: () => this.error.set('Invalid email or password.')
         });
