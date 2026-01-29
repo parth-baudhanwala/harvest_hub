@@ -46,6 +46,12 @@ builder.Services
             OnMessageReceived = context =>
             {
                 if (string.IsNullOrWhiteSpace(context.Token)
+                    && context.Request.Cookies.TryGetValue("hh_admin_access_token", out var adminToken))
+                {
+                    context.Token = adminToken;
+                }
+
+                if (string.IsNullOrWhiteSpace(context.Token)
                     && context.Request.Cookies.TryGetValue("hh_access_token", out var cookieToken))
                 {
                     context.Token = cookieToken;
