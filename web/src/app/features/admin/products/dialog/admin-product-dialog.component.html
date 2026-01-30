@@ -25,26 +25,45 @@
     </mat-form-field>
 
     @if (mode === 'edit') {
-      <mat-form-field appearance="outline">
-        <mat-label>Image URL</mat-label>
-        <input matInput formControlName="imageFile" />
-      </mat-form-field>
-    } @else {
       <div class="upload">
         <div class="upload-header">
-          <mat-icon>cloud_upload</mat-icon>
+          <mat-icon>image</mat-icon>
           <div>
-            <div class="upload-title">Upload product image</div>
-            <div class="upload-subtitle">JPG, PNG, WEBP up to 2MB</div>
+            <div class="upload-title">Current product image</div>
+            <div class="upload-subtitle">
+              @if (form.get('imageFile')?.value) {
+                <a
+                  class="image-link"
+                  [href]="form.get('imageFile')?.value"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <span>{{ getImageFileName(form.get('imageFile')?.value) }}</span>
+                  <mat-icon class="image-link-icon" aria-hidden="true">open_in_new</mat-icon>
+                </a>
+              } @else {
+                <span class="muted">No image on file yet.</span>
+              }
+            </div>
           </div>
-        </div>
-        <div class="upload-actions">
-          <label class="upload-button" for="productUpload">Choose file</label>
-          <input id="productUpload" type="file" accept=".jpg,.jpeg,.png,.webp" (change)="onFileSelected($event)" />
-          <span class="file-name">{{ form.get('imageFileName')?.value || 'No file selected' }}</span>
         </div>
       </div>
     }
+
+    <div class="upload">
+      <div class="upload-header">
+        <mat-icon>cloud_upload</mat-icon>
+        <div>
+          <div class="upload-title">Upload product image</div>
+          <div class="upload-subtitle">JPG, PNG, WEBP up to 2MB</div>
+        </div>
+      </div>
+      <div class="upload-actions">
+        <label class="upload-button" for="productUpload">Choose file</label>
+        <input id="productUpload" type="file" accept=".jpg,.jpeg,.png,.webp" (change)="onFileSelected($event)" />
+        <span class="file-name">{{ form.get('imageFileName')?.value || 'No file selected' }}</span>
+      </div>
+    </div>
 
     @if (error()) {
       <div class="error">{{ error() }}</div>

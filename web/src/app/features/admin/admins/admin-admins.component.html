@@ -11,7 +11,7 @@
       </button>
     </div>
 
-    <mat-divider></mat-divider>
+    <div class="section-divider" aria-hidden="true"></div>
 
     @if (loading()) {
       <div class="loading">
@@ -19,32 +19,31 @@
       </div>
     } @else {
       <div class="table-wrapper">
-        <table mat-table [dataSource]="admins()" class="mat-elevation-z0">
-          <ng-container matColumnDef="userName">
-            <th mat-header-cell *matHeaderCellDef>User</th>
-            <td mat-cell *matCellDef="let admin">{{ admin.userName }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="email">
-            <th mat-header-cell *matHeaderCellDef>Email</th>
-            <td mat-cell *matCellDef="let admin">{{ admin.email }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>Actions</th>
-            <td mat-cell *matCellDef="let admin" class="actions">
-              <button mat-icon-button color="primary" (click)="editAdmin(admin)">
-                <mat-icon>edit</mat-icon>
-              </button>
-              <button mat-icon-button color="warn" (click)="deleteAdmin(admin)">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-        </table>
+        <div class="records-list">
+          @for (admin of admins(); track admin.id ?? admin.userName) {
+            <div class="record-card">
+              <div class="record-main">
+                <div class="user-block">
+                  <div class="avatar">{{ admin.userName.charAt(0) || 'A' }}</div>
+                  <div>
+                    <div class="record-title">{{ admin.userName }}</div>
+                    <div class="record-subtitle">{{ admin.email }}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="record-aside">
+                <div class="record-actions">
+                  <button mat-icon-button color="primary" class="action-button" (click)="editAdmin(admin)">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-icon-button color="warn" class="action-button" (click)="deleteAdmin(admin)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
       </div>
     }
   </mat-card>

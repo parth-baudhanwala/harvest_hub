@@ -7,7 +7,7 @@
       </div>
     </div>
 
-    <mat-divider></mat-divider>
+    <div class="section-divider" aria-hidden="true"></div>
 
     @if (loading()) {
       <div class="loading">
@@ -15,45 +15,34 @@
       </div>
     } @else {
       <div class="table-wrapper">
-        <table mat-table [dataSource]="orders()" class="mat-elevation-z0">
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef>Order</th>
-            <td mat-cell *matCellDef="let order">
-              <div class="order-name">{{ order.name }}</div>
-              <div class="order-id">{{ order.id }}</div>
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="customer">
-            <th mat-header-cell *matHeaderCellDef>Customer</th>
-            <td mat-cell *matCellDef="let order">{{ order.customerId }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef>Status</th>
-            <td mat-cell *matCellDef="let order">{{ statusLabel(order.status) }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="total">
-            <th mat-header-cell *matHeaderCellDef>Total</th>
-            <td mat-cell *matCellDef="let order">₹ {{ getTotal(order) }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>Actions</th>
-            <td mat-cell *matCellDef="let order" class="actions">
-              <button mat-icon-button color="primary" (click)="editOrder(order)">
-                <mat-icon>edit</mat-icon>
-              </button>
-              <button mat-icon-button color="warn" (click)="deleteOrder(order)">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-        </table>
+        <div class="records-list">
+          @for (order of orders(); track order.id) {
+            <div class="record-card">
+              <div class="record-main">
+                <div class="record-title">{{ order.name }}</div>
+                <div class="record-subtitle">Order ID: {{ order.id }}</div>
+                <div class="record-meta">
+                  <span class="meta-label">Customer</span>
+                  <span class="meta-value">{{ order.customerId }}</span>
+                </div>
+              </div>
+              <div class="record-aside">
+                <span class="status-pill" [attr.data-status]="statusLabel(order.status)">
+                  {{ statusLabel(order.status) }}
+                </span>
+                <span class="price-chip">₹ {{ getTotal(order) }}</span>
+                <div class="record-actions">
+                  <button mat-icon-button color="primary" class="action-button" (click)="editOrder(order)">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-icon-button color="warn" class="action-button" (click)="deleteOrder(order)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
       </div>
 
       <mat-paginator

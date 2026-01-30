@@ -11,7 +11,7 @@
       </button>
     </div>
 
-    <mat-divider></mat-divider>
+    <div class="section-divider" aria-hidden="true"></div>
 
     @if (loading()) {
       <div class="loading">
@@ -19,37 +19,32 @@
       </div>
     } @else {
       <div class="table-wrapper">
-        <table mat-table [dataSource]="products()" class="mat-elevation-z0">
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef>Name</th>
-            <td mat-cell *matCellDef="let product">{{ product.name }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="price">
-            <th mat-header-cell *matHeaderCellDef>Price</th>
-            <td mat-cell *matCellDef="let product">₹ {{ product.price }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="categories">
-            <th mat-header-cell *matHeaderCellDef>Categories</th>
-            <td mat-cell *matCellDef="let product">{{ product.categories.join(', ') }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>Actions</th>
-            <td mat-cell *matCellDef="let product" class="actions">
-              <button mat-icon-button color="primary" (click)="openEditDialog(product)">
-                <mat-icon>edit</mat-icon>
-              </button>
-              <button mat-icon-button color="warn" (click)="deleteProduct(product)">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-        </table>
+        <div class="records-list">
+          @for (product of products(); track product.id ?? product.name) {
+            <div class="record-card">
+              <div class="record-main">
+                <div class="record-title">{{ product.name }}</div>
+                <div class="record-subtitle">{{ product.description || 'Catalog item' }}</div>
+                <div class="record-tags">
+                  @for (category of product.categories; track category) {
+                    <span class="tag">{{ category }}</span>
+                  }
+                </div>
+              </div>
+              <div class="record-aside">
+                <span class="price-chip">₹ {{ product.price }}</span>
+                <div class="record-actions">
+                  <button mat-icon-button color="primary" class="action-button" (click)="openEditDialog(product)">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-icon-button color="warn" class="action-button" (click)="deleteProduct(product)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
       </div>
 
       <mat-paginator

@@ -87,6 +87,25 @@
   color: var(--mat-sys-on-surface-variant, #5f6368);
 }
 
+.image-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #1a73e8;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.image-link:hover {
+  text-decoration: underline;
+}
+
+.image-link-icon {
+  font-size: 1rem;
+  height: 1rem;
+  width: 1rem;
+}
+
 
 .error {
   color: var(--mat-sys-error, #b3261e);

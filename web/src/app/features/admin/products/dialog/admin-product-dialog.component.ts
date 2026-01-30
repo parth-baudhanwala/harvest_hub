@@ -145,6 +145,18 @@ export class AdminProductDialogComponent {
     this.dialogRef.close();
   }
 
+  getImageFileName(url: string | undefined) {
+    if (!url) return 'Current image';
+    try {
+      const parsed = url.startsWith('http') ? new URL(url) : new URL(url, window.location.origin);
+      const pathname = parsed.pathname.split('/').filter(Boolean);
+      return decodeURIComponent(pathname[pathname.length - 1] ?? url);
+    } catch {
+      const segments = url.split('?')[0].split('/').filter(Boolean);
+      return decodeURIComponent(segments[segments.length - 1] ?? url);
+    }
+  }
+
   private parseCategories(value: string) {
     return value
       .split(',')

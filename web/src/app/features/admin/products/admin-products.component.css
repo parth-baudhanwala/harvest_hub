@@ -5,7 +5,11 @@
 }
 
 .table-card {
-  padding: 1.5rem;
+  padding: 1.75rem;
+  border-radius: 18px;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.98));
 }
 
 .header-row {
@@ -22,12 +26,150 @@
 
 .table-wrapper {
   overflow-x: auto;
-  margin-top: 1rem;
+  margin-top: 1.25rem;
+}
+
+.records-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.record-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1rem 1.25rem;
+  border-radius: 16px;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  background: #ffffff;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+}
+
+.record-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.record-title {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.record-subtitle {
+  font-size: 0.9rem;
+  color: #64748b;
+}
+
+.record-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.35rem;
+}
+
+.tag {
+  font-size: 0.78rem;
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(59, 130, 246, 0.12);
+  color: #1d4ed8;
+  font-weight: 600;
+}
+
+.record-aside {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.price-chip {
+  padding: 0.3rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(14, 116, 144, 0.12);
+  color: #0e7490;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.record-actions {
+  display: inline-flex;
+  gap: 0.5rem;
 }
 
 .actions {
+  display: inline-flex;
   gap: 0.25rem;
   align-items: center;
+}
+
+.action-button {
+  border-radius: 12px;
+  background: rgba(148, 163, 184, 0.14);
+}
+
+.action-button:hover,
+.action-button:focus-visible {
+  border-radius: 12px;
+  background: rgba(99, 102, 241, 0.18);
+}
+
+:host ::ng-deep .action-button .mat-mdc-button-persistent-ripple,
+:host ::ng-deep .action-button .mat-mdc-button-ripple,
+:host ::ng-deep .action-button .mat-mdc-button-touch-target,
+:host ::ng-deep .action-button .mat-mdc-focus-indicator {
+  border-radius: 12px;
+}
+
+@media (max-width: 900px) {
+  .record-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .record-aside {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+:host-context(body.theme-dark) {
+  .table-card {
+    border-color: rgba(51, 65, 85, 0.6);
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.96), rgba(2, 6, 23, 0.98));
+    box-shadow: 0 24px 48px rgba(2, 6, 23, 0.6);
+  }
+
+  .record-card {
+    background: #0f172a;
+    border-color: rgba(51, 65, 85, 0.8);
+    box-shadow: 0 10px 26px rgba(2, 6, 23, 0.6);
+  }
+
+  .record-title {
+    color: #e2e8f0;
+  }
+
+  .record-subtitle {
+    color: #94a3b8;
+  }
+
+  .tag {
+    background: rgba(59, 130, 246, 0.2);
+    color: #bfdbfe;
+  }
+
+  .price-chip {
+    background: rgba(14, 116, 144, 0.25);
+    color: #7dd3fc;
+  }
+
+  .action-button {
+    background: rgba(148, 163, 184, 0.2);
+  }
 }
 
 .loading {
