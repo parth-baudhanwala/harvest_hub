@@ -1,0 +1,31 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+
+<mat-dialog-content class="dialog-content">
+  <p class="muted">Manage admin access for the warehouse team.</p>
+
+  <form id="adminForm" class="dialog-form" [formGroup]="form" (ngSubmit)="submit()">
+    <mat-form-field appearance="outline">
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="username" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" type="email" />
+    </mat-form-field>
+
+    @if (mode === 'create') {
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" type="password" />
+      </mat-form-field>
+    }
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-stroked-button type="button" (click)="cancel()">Cancel</button>
+  <button mat-raised-button color="primary" type="submit" form="adminForm">
+    {{ mode === 'create' ? 'Create' : 'Update' }}
+  </button>
+</mat-dialog-actions>

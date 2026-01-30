@@ -1,0 +1,29 @@
+<div class="login-page">
+  <mat-card class="login-card">
+    <h1 class="title">Sign in</h1>
+    <p class="subtitle">Access the Harvest Hub admin console.</p>
+
+    <form class="login-form" [formGroup]="loginForm" (ngSubmit)="submit()">
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" type="email" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" type="password" />
+      </mat-form-field>
+
+      @if (error()) {
+        <div class="error">{{ error() }}</div>
+      }
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="loading()">
+        @if (loading()) {
+          <mat-progress-spinner mode="indeterminate" diameter="18"></mat-progress-spinner>
+        }
+        <span>Sign in</span>
+      </button>
+    </form>
+  </mat-card>
+</div>

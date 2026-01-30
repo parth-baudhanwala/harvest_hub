@@ -5,7 +5,7 @@ public class GetOrdersQueryHandler(IApplicationDbContext dbContext) : IQueryHand
 {
     public async Task<GetOrdersResult> Handle(GetOrdersQuery query, CancellationToken cancellationToken)
     {
-        int index = query.PaginationRequest.Index;
+        int index = Math.Max(0, query.PaginationRequest.Index);
         int size = query.PaginationRequest.Size;
 
         long count = await dbContext.Orders.LongCountAsync(cancellationToken);

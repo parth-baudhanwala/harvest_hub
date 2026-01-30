@@ -1,0 +1,58 @@
+<section class="orders-layout">
+  <mat-card class="table-card">
+    <div class="header-row">
+      <div>
+        <h2>Orders</h2>
+        <p class="muted">Review and update customer orders.</p>
+      </div>
+    </div>
+
+    <div class="section-divider" aria-hidden="true"></div>
+
+    @if (loading()) {
+      <div class="loading">
+        <mat-progress-spinner mode="indeterminate" diameter="36"></mat-progress-spinner>
+      </div>
+    } @else {
+      <div class="table-wrapper">
+        <div class="records-list">
+          @for (order of orders(); track order.id) {
+            <div class="record-card">
+              <div class="record-main">
+                <div class="record-title">{{ order.name }}</div>
+                <div class="record-subtitle">Order ID: {{ order.id }}</div>
+                <div class="record-meta">
+                  <span class="meta-label">Customer</span>
+                  <span class="meta-value">{{ order.customerId }}</span>
+                </div>
+              </div>
+              <div class="record-aside">
+                <span class="status-pill" [attr.data-status]="statusLabel(order.status)">
+                  {{ statusLabel(order.status) }}
+                </span>
+                <span class="price-chip">₹ {{ getTotal(order) }}</span>
+                <div class="record-actions">
+                  <button mat-icon-button color="primary" class="action-button" (click)="editOrder(order)">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-icon-button color="warn" class="action-button" (click)="deleteOrder(order)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <mat-paginator
+        [length]="totalCount()"
+        [pageIndex]="pageIndex()"
+        [pageSize]="pageSize()"
+        [pageSizeOptions]="[5, 10, 20]"
+        (page)="handlePage($event)"
+      ></mat-paginator>
+    }
+  </mat-card>
+
+</section>

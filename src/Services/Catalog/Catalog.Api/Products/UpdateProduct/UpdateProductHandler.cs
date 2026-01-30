@@ -36,6 +36,7 @@ internal class UpdateProductCommandHandler(IDocumentSession session, IPublishEnd
         product.Description = command.Description;
         product.ImageFile = command.ImageFile;
         product.Price = command.Price;
+        product.Categories = command.Categories;
 
         session.Update(product);
         await session.SaveChangesAsync(cancellationToken);

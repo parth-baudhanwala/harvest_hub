@@ -51,6 +51,19 @@ body.theme-dark {
   @include mat.all-component-themes($dark-theme);
 }
 
+.section-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 0, 0, 0.08),
+    rgba(0, 0, 0, 0.12),
+    rgba(0, 0, 0, 0.08),
+    transparent
+  );
+  margin: 1rem 0;
+}
+
 .cart-badge.mat-badge-above .mat-badge-content {
   top: 2px;
   right: -4px;

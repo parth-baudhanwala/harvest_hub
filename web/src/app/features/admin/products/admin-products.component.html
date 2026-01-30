@@ -1,0 +1,60 @@
+<section class="products-layout">
+  <mat-card class="table-card">
+    <div class="header-row">
+      <div>
+        <h2>Products</h2>
+        <p class="muted">Manage catalog listings.</p>
+      </div>
+      <button mat-stroked-button color="primary" (click)="openCreateDialog()">
+        <mat-icon>add</mat-icon>
+        New product
+      </button>
+    </div>
+
+    <div class="section-divider" aria-hidden="true"></div>
+
+    @if (loading()) {
+      <div class="loading">
+        <mat-progress-spinner mode="indeterminate" diameter="36"></mat-progress-spinner>
+      </div>
+    } @else {
+      <div class="table-wrapper">
+        <div class="records-list">
+          @for (product of products(); track product.id ?? product.name) {
+            <div class="record-card">
+              <div class="record-main">
+                <div class="record-title">{{ product.name }}</div>
+                <div class="record-subtitle">{{ product.description || 'Catalog item' }}</div>
+                <div class="record-tags">
+                  @for (category of product.categories; track category) {
+                    <span class="tag">{{ category }}</span>
+                  }
+                </div>
+              </div>
+              <div class="record-aside">
+                <span class="price-chip">₹ {{ product.price }}</span>
+                <div class="record-actions">
+                  <button mat-icon-button color="primary" class="action-button" (click)="openEditDialog(product)">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-icon-button color="warn" class="action-button" (click)="deleteProduct(product)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <mat-paginator
+        [length]="totalCount()"
+        [pageIndex]="pageIndex()"
+        [pageSize]="pageSize()"
+        [pageSizeOptions]="[5, 10, 20]"
+        (page)="handlePage($event)"
+      ></mat-paginator>
+    }
+  </mat-card>
+
+</section>

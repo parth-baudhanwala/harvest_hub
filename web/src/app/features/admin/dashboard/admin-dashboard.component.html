@@ -1,0 +1,34 @@
+<section class="dashboard">
+  <div class="dashboard-header">
+    <div>
+      <h2>Admin overview</h2>
+      <p class="muted">Quick access to warehouse operations.</p>
+    </div>
+    @if (loading()) {
+      <mat-progress-spinner mode="indeterminate" diameter="28"></mat-progress-spinner>
+    }
+  </div>
+
+  <div class="cards">
+    <mat-card class="card" routerLink="/admin/products">
+      <div class="card-title">Products</div>
+      <div class="card-count">{{ productCount() }}</div>
+      <div class="card-subtitle">Manage catalog listings</div>
+    </mat-card>
+    <mat-card class="card" routerLink="/admin/orders">
+      <div class="card-title">Orders</div>
+      <div class="card-count">{{ orderCount() }}</div>
+      <div class="card-subtitle">Track and update orders</div>
+    </mat-card>
+    <mat-card class="card" routerLink="/admin/users">
+      <div class="card-title">Users</div>
+      <div class="card-count">{{ userCount() }}</div>
+      <div class="card-subtitle">View customer accounts</div>
+    </mat-card>
+    <mat-card class="card" routerLink="/admin/admins">
+      <div class="card-title">Admins</div>
+      <div class="card-count">{{ adminCount() }}</div>
+      <div class="card-subtitle">Manage admin access</div>
+    </mat-card>
+  </div>
+</section>

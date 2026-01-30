@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { forkJoin, of } from 'rxjs';
@@ -19,7 +18,6 @@ import { OrderService } from '../../core/services/order.service';
   imports: [
     CommonModule,
     MatCardModule,
-    MatDividerModule,
     MatExpansionModule,
     MatProgressSpinnerModule,
     MatButtonModule

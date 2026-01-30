@@ -33,7 +33,7 @@
               {{ statusLabel(order.status) }}
             </span>
             <span class="items">{{ order.items.length }} items</span>
-            <span class="total">{{ getTotal(order) | currency }}</span>
+            <span class="total">{{ getTotal(order) | currency:'INR':'symbol' }}</span>
           </div>
         </div>
       </mat-expansion-panel-header>
@@ -50,18 +50,18 @@
             <div>
               <div class="item-name">{{ productName(item.productId) }}</div>
             </div>
-            <div>{{ item.price | currency }}</div>
+            <div>{{ item.price | currency:'INR':'symbol' }}</div>
             <div>{{ item.quantity }}</div>
-            <div>{{ getOrderItemTotal(item.price, item.quantity) | currency }}</div>
+            <div>{{ getOrderItemTotal(item.price, item.quantity) | currency:'INR':'symbol' }}</div>
           </div>
         }
       </div>
 
-      <mat-divider></mat-divider>
+      <div class="section-divider" aria-hidden="true"></div>
 
       <div class="panel-footer">
         <div class="muted">Shipping and billing details are available on request.</div>
-        <div class="total">Order total: {{ getTotal(order) | currency }}</div>
+        <div class="total">Order total: {{ getTotal(order) | currency:'INR':'symbol' }}</div>
       </div>
         </mat-expansion-panel>
       }

@@ -122,8 +122,8 @@ namespace OrderStream.Infrastructure.Data.Migrations
 
                             b1.Property<string>("ZipCode")
                                 .IsRequired()
-                                .HasMaxLength(5)
-                                .HasColumnType("nvarchar(5)");
+                                .HasMaxLength(6)
+                                .HasColumnType("nvarchar(6)");
                         });
 
                     b.ComplexProperty<Dictionary<string, object>>("Name", "OrderStream.Domain.Models.Order.Name#OrderName", b1 =>
@@ -199,8 +199,8 @@ namespace OrderStream.Infrastructure.Data.Migrations
 
                             b1.Property<string>("ZipCode")
                                 .IsRequired()
-                                .HasMaxLength(5)
-                                .HasColumnType("nvarchar(5)");
+                                .HasMaxLength(6)
+                                .HasColumnType("nvarchar(6)");
                         });
 
                     b.HasKey("Id");

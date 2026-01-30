@@ -13,6 +13,10 @@ interface GetOrdersByCustomerResponse {
   orders: Order[];
 }
 
+interface UpdateOrderRequest {
+  order: Order;
+}
+
 @Injectable({ providedIn: 'root' })
 export class OrderService {
   constructor(private readonly api: ApiService) {}
@@ -27,5 +31,16 @@ export class OrderService {
     return this.api
       .get<GetOrdersByCustomerResponse>(`/ordering-service/orders/customer/${encodeURIComponent(customerId)}`)
       .pipe(map((response) => response.orders));
+  }
+
+  updateOrder(order: Order) {
+    const payload: UpdateOrderRequest = { order };
+    return this.api.put<{ isSuccess: boolean }>(`/ordering-service/orders`, payload);
+  }
+
+  deleteOrder(orderId: string) {
+    return this.api.delete<{ isSuccess: boolean }>(
+      `/ordering-service/orders/${encodeURIComponent(orderId)}`
+    );
   }
 }

@@ -26,7 +26,7 @@
                 <div class="muted">{{ item.description || 'Fresh product from Harvest Hub.' }}</div>
               </div>
             </div>
-            <div class="price">{{ item.price | currency }}</div>
+            <div class="price">{{ item.price | currency:'INR':'symbol' }}</div>
             <mat-form-field appearance="outline" class="quantity">
               <mat-label>Qty</mat-label>
               <input
@@ -37,7 +37,7 @@
                 (change)="updateQuantity(item, $any($event.target).value)"
               />
             </mat-form-field>
-            <div class="line-total">{{ item.price * item.quantity | currency }}</div>
+            <div class="line-total">{{ item.price * item.quantity | currency:'INR':'symbol' }}</div>
             <button mat-icon-button color="warn" (click)="removeItem(item)">
               <mat-icon>delete</mat-icon>
             </button>
@@ -49,7 +49,7 @@
         <div class="summary">
           <div class="summary-row">
             <span>Subtotal</span>
-            <strong>{{ basket.totalPrice | currency }}</strong>
+            <strong>{{ basket.totalPrice | currency:'INR':'symbol' }}</strong>
           </div>
           <div class="summary-row muted">
             <span>Taxes</span>

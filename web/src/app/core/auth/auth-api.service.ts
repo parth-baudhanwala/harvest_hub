@@ -26,6 +26,7 @@ export interface MeResponse {
   id: string;
   userName: string;
   email: string;
+  roles: string[];
 }
 
 @Injectable({ providedIn: 'root' })
@@ -41,11 +42,19 @@ export class AuthApiService {
     return this.http.post<LoginResponse>(`${this.baseUrl}/api/auth/login`, payload);
   }
 
+  adminLogin(payload: LoginRequest) {
+    return this.http.post<LoginResponse>(`${this.baseUrl}/api/admin/login`, payload);
+  }
+
   me() {
     return this.http.get<MeResponse>(`${this.baseUrl}/api/auth/me`);
   }
 
   logout() {
     return this.http.post<void>(`${this.baseUrl}/api/auth/logout`, {});
+  }
+
+  adminLogout() {
+    return this.http.post<void>(`${this.baseUrl}/api/admin/logout`, {});
   }
 }

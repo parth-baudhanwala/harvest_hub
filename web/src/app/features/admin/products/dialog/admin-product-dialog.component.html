@@ -1,0 +1,79 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+
+<mat-dialog-content class="dialog-content">
+  <p class="muted">Keep catalog details accurate and consistent.</p>
+
+  <form id="productForm" class="dialog-form" [formGroup]="form" (ngSubmit)="submit()">
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Categories (comma separated)</mat-label>
+      <input matInput formControlName="categories" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Price</mat-label>
+      <input matInput formControlName="price" type="number" min="0" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description" rows="3"></textarea>
+    </mat-form-field>
+
+    @if (mode === 'edit') {
+      <div class="upload">
+        <div class="upload-header">
+          <mat-icon>image</mat-icon>
+          <div>
+            <div class="upload-title">Current product image</div>
+            <div class="upload-subtitle">
+              @if (form.get('imageFile')?.value) {
+                <a
+                  class="image-link"
+                  [href]="form.get('imageFile')?.value"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <span>{{ getImageFileName(form.get('imageFile')?.value) }}</span>
+                  <mat-icon class="image-link-icon" aria-hidden="true">open_in_new</mat-icon>
+                </a>
+              } @else {
+                <span class="muted">No image on file yet.</span>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+
+    <div class="upload">
+      <div class="upload-header">
+        <mat-icon>cloud_upload</mat-icon>
+        <div>
+          <div class="upload-title">Upload product image</div>
+          <div class="upload-subtitle">JPG, PNG, WEBP up to 2MB</div>
+        </div>
+      </div>
+      <div class="upload-actions">
+        <label class="upload-button" for="productUpload">Choose file</label>
+        <input id="productUpload" type="file" accept=".jpg,.jpeg,.png,.webp" (change)="onFileSelected($event)" />
+        <span class="file-name">{{ form.get('imageFileName')?.value || 'No file selected' }}</span>
+      </div>
+    </div>
+
+    @if (error()) {
+      <div class="error">{{ error() }}</div>
+    }
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-stroked-button type="button" (click)="cancel()">Cancel</button>
+  <button mat-raised-button color="primary" type="submit" form="productForm">
+    {{ mode === 'create' ? 'Create' : 'Update' }}
+  </button>
+</mat-dialog-actions>
