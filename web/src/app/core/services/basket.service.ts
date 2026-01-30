@@ -40,12 +40,25 @@ export class BasketService {
   loadBasket(username: string) {
     this.loadingSignal.set(true);
     if (this.auth.isAuthenticated()) {
+      const guestBasket = this.readLocal('guest');
       this.api
         .get<GetBasketResponse>(`/basket-service/basket/${encodeURIComponent(username)}`)
         .pipe(
-          tap((response) => this.setAndPersistLocal(response.cart)),
+          tap((response) => {
+            const merged = this.mergeBaskets(response.cart, guestBasket);
+            this.setAndPersistLocal(merged);
+            if (guestBasket?.items.length) {
+              this.persistBasket(merged).subscribe();
+              this.clearLocal('guest');
+            }
+          }),
           catchError(() => {
-            this.setAndPersistLocal(this.createEmptyBasket(username));
+            const merged = this.mergeBaskets(this.createEmptyBasket(username), guestBasket);
+            this.setAndPersistLocal(merged);
+            if (guestBasket?.items.length) {
+              this.persistBasket(merged).subscribe();
+              this.clearLocal('guest');
+            }
             return of(null);
           }),
           finalize(() => this.loadingSignal.set(false))
@@ -153,6 +166,24 @@ export class BasketService {
     return { ...cart, totalPrice: total };
   }
 
+  private mergeBaskets(base: ShoppingCart, incoming: ShoppingCart | null): ShoppingCart {
+    if (!incoming?.items.length) {
+      return this.recalculate({ ...base, items: [...base.items] });
+    }
+
+    const items = base.items.map((item) => ({ ...item }));
+    for (const item of incoming.items) {
+      const existing = items.find((current) => current.productId === item.productId);
+      if (existing) {
+        existing.quantity += item.quantity;
+      } else {
+        items.push({ ...item });
+      }
+    }
+
+    return this.recalculate({ ...base, items });
+  }
+
   private setAndPersistLocal(cart: ShoppingCart) {
     this.basketSignal.set(cart);
     localStorage.setItem(this.getLocalKey(cart.username), JSON.stringify(cart));
@@ -170,5 +201,9 @@ export class BasketService {
 
   private getLocalKey(username: string) {
     return `hh_basket_${username}`;
+  }
+
+  private clearLocal(username: string) {
+    localStorage.removeItem(this.getLocalKey(username));
   }
 }

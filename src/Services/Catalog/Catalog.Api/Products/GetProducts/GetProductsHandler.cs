@@ -12,13 +12,14 @@ internal class GetProductsQueryHandler(IDocumentSession session)
 {
     public async Task<GetProductsResult> Handle(GetProductsQuery query, CancellationToken cancellationToken)
     {
-        int index = query.PaginationRequest.Index;
+        int index = Math.Max(0, query.PaginationRequest.Index);
         int size = query.PaginationRequest.Size;
 
         long count = await session.Query<Product>().LongCountAsync(cancellationToken);
 
+        var pageNumber = index + 1;
         var products = await session.Query<Product>()
-                                    .ToPagedListAsync(query.PaginationRequest.Index, query.PaginationRequest.Size, cancellationToken);
+                        .ToPagedListAsync(pageNumber, size, cancellationToken);
 
         return new(new PaginatedResult<Product>(index, size, count, products));
     }

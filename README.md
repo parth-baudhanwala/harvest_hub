@@ -1,12 +1,13 @@
 # 🥬 HarvestHub
 
-HarvestHub is a **grocery delivery platform** built as a modern microservices stack with an Angular SPA frontend. It’s designed for local development with containers and a clean service boundary architecture.
+HarvestHub is a **grocery delivery platform** built as a modern microservices stack with an Angular SPA frontend and an **admin portal**. It’s designed for local development with containers and a clean service boundary architecture.
 
 ## ✨ Highlights
-- 🧩 **Microservices** with .NET 8, MediatR, Carter, FluentValidation
+- 🧩 **Microservices** with .NET 10, MediatR, Carter, FluentValidation
 - 🌐 **API Gateway** using YARP (single entrypoint for the SPA)
 - 🔐 **Cookie-based JWT auth** via Identity service
 - 🛒 Core flows: **catalog → cart → checkout → orders**
+- 🛠️ **Admin portal** for managing products, users, orders, and admins
 - ⚡ **Angular** standalone components + lazy loaded feature routes
 - 🐇 **RabbitMQ** with MassTransit for messaging
 
@@ -28,6 +29,7 @@ Key feature areas live in [web/src/app/features](web/src/app/features):
 - 💳 Checkout: [web/src/app/features/checkout](web/src/app/features/checkout)
 - 📦 Orders: [web/src/app/features/orders](web/src/app/features/orders)
 - 🔐 Auth dialog: [web/src/app/features/auth](web/src/app/features/auth)
+- 🛠️ Admin portal: [web/src/app/features/admin](web/src/app/features/admin)
 
 Routes are defined in [web/src/app/app.routes.ts](web/src/app/app.routes.ts) with lazy-loaded feature route files.
 

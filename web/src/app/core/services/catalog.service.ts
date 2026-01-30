@@ -43,7 +43,7 @@ export class CatalogService {
   getProducts(index = 0, size = 10) {
     return this.api
       .get<GetProductsResponse>('/catalog-service/products', {
-        Index: Math.max(1, index + 1),
+        Index: Math.max(0, index),
         Size: size
       })
       .pipe(map((response) => response.products));

@@ -68,7 +68,7 @@ export class AdminOrdersComponent {
       .subscribe({
         next: (result) => {
           this.orders.set(result.data);
-          this.pageIndex.set(result.index - 1);
+          this.pageIndex.set(result.index);
           this.pageSize.set(result.size);
           this.totalCount.set(result.count);
         },
