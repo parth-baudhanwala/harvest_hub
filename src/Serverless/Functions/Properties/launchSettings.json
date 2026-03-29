@@ -1,0 +1,15 @@
+{
+  "profiles": {
+    "Functions": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7218"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "containerRunArguments": "--init",
+      "httpPort": 34253,
+      "useSSL": false
+    }
+  }
+}

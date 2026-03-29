@@ -1,0 +1,52 @@
+{
+  "version": "2.0",
+  "logLevel": {
+    "default": "Information",
+    "Host.Results": "Error",
+    "Function": "Error",
+    "Host.Aggregator": "Information"
+  },
+  "functionTimeout": "00:05:00",
+  "tracing": {
+    "consoleLevel": "verbose"
+  },
+  "managedDependency": {
+    "enabled": true
+  },
+  "extensionBundle": {
+    "id": "Microsoft.Azure.Functions.ExtensionBundle",
+    "version": "[4.*, 5.0.0)"
+  },
+  "healthMonitor": {
+    "enabled": true,
+    "healthCheckInterval": "00:00:10",
+    "healthCheckWindow": "00:02:00",
+    "healthCheckThreshold": 6,
+    "counterThreshold": 0.8
+  },
+  "functionLanguageWorker": {
+    "workerVersion": ""
+  },
+  "applicationInsights": {
+    "samplingSettings": {
+      "isEnabled": true,
+      "maxTelemetryItemsPerSecond": 20,
+      "evaluationInterval": "01:00:00",
+      "initialSamplingPercentage": 100.0,
+      "samplingPercentageIncreaseTimeout": "01:01:00",
+      "samplingPercentageDecreaseTimeout": "01:05:00",
+      "minSamplingPercentage": 0.1,
+      "maxSamplingPercentage": 100.0,
+      "movingAverageRatio": 0.25,
+      "excludedTypes": "Dependency;Event",
+      "includedTypes": "Request;Trace"
+    }
+  },
+  "Logging": {
+    "LogLevel": {
+      "default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  }
+}

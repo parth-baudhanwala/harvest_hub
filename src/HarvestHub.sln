@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.10.34928.147
+# Visual Studio Version 18
+VisualStudioVersion = 18.4.11620.152 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{C0FC24B5-88E6-4194-9F27-AEA89044E21E}"
 EndProject
@@ -42,6 +42,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{9331D359-4FB9-46A6-ACDC-4504F184704E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity.Api", "Identity\Identity.Api\Identity.Api.csproj", "{CA217328-BE62-485C-83B1-FF6615E350CA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Serverless", "Serverless", "{D13856C3-540E-4294-A455-ABBB981AB9F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Functions", "Serverless\Functions\Functions.csproj", "{37DC4101-F1ED-4D80-84B0-B124B8D611F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -97,6 +101,10 @@ Global
 		{CA217328-BE62-485C-83B1-FF6615E350CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA217328-BE62-485C-83B1-FF6615E350CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA217328-BE62-485C-83B1-FF6615E350CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37DC4101-F1ED-4D80-84B0-B124B8D611F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37DC4101-F1ED-4D80-84B0-B124B8D611F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37DC4101-F1ED-4D80-84B0-B124B8D611F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37DC4101-F1ED-4D80-84B0-B124B8D611F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -117,6 +125,7 @@ Global
 		{1AFA3B84-4461-4B3A-9EED-3F78FC4DEF86} = {BC81BDC1-F8A4-4061-949C-41FBA31F5213}
 		{1E30CBBE-BFEE-4EFA-871C-D1E631D1D935} = {56EB702E-A3FA-41C8-919B-56209A752B31}
 		{CA217328-BE62-485C-83B1-FF6615E350CA} = {9331D359-4FB9-46A6-ACDC-4504F184704E}
+		{37DC4101-F1ED-4D80-84B0-B124B8D611F4} = {D13856C3-540E-4294-A455-ABBB981AB9F1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F13303D2-6AE9-429B-8174-DFD81257A4C4}
